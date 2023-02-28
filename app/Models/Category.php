@@ -15,8 +15,15 @@ class Category extends Model
         'name' => 'required',
     ];
 
+    public $rules2 = [
+        'img' => 'required',
+    ];
     public function subcategory()
     {
         return $this->hasOne(SubCategory::class);
+    }
+    public function subcategorymany()
+    {
+        return $this->hasMany(SubCategory::class,'categories_id');
     }
 }

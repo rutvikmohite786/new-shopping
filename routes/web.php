@@ -15,6 +15,7 @@ use App\http\Controllers\Admin\Product\ProductAttributeController;
 use App\http\Controllers\Admin\Product\ProductPricestocksController;
 use App\http\Controllers\Admin\Product\BrandController;
 use App\http\Controllers\Admin\Product\BannerController;
+use App\http\Controllers\Front\DashboardController;
 
 
 
@@ -141,9 +142,14 @@ Route::group(['middleware' => ['adminauth']], function () {
 });
 
 Route::group(['middleware' => ['userauth']], function () {
-    Route::controller(HomeController::class)->group(function () {
-        Route::view('/user/new', 'web.home')->name('user');
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('/user/new', 'index')->name('user');
     });
+});
+
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('contact', 'contactUs')->name('contact');
+    Route::get('about', 'aboutUs')->name('about');
 });
 
 //user login routes

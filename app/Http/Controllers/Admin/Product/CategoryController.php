@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace App\Http\Controllers\Admin\Product;
 
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ class CategoryController extends Controller
    public function store(Request $request)
    {
       $category = new Category();
-      $validator = Validator::make($request->all(),$category->rules);
+      $validator = Validator::make($request->all(), $category->rules);
       if ($validator->fails()) {
          return redirect()->back()->withErrors($validator);
       }
@@ -32,7 +32,7 @@ class CategoryController extends Controller
       $request->img->move(public_path($destinationPath), $name);
       $category->image = $name;
       $category->save();
-      return redirect()->route('index.category')->with('message','Category added');
+      return redirect()->route('index.category')->with('message', 'Category added');
    }
    public function edit($id)
    {
@@ -47,13 +47,26 @@ class CategoryController extends Controller
    public function update(Request $request)
    {
       $category = new Category();
-      $validator = Validator::make($request->all(),$category->rules);
+      $validator = Validator::make($request->all(), $category->rules);
       if ($validator->fails()) {
          return redirect()->back()->withErrors($validator);
       }
-      $category->where('id', $request->id)->update([
-         'name' => $request->name
-      ]);
-      return redirect()->route('index.category')->with('message','Category updeted');
+      $categoryUpdate = $category->find($request->id);
+      if (isset($request->img)) {
+         $validator2 = Validator::make($request->all(), $category->rules2);
+         if ($validator2->fails()) {
+            return redirect()->back()->withErrors($validator2);
+         }
+         $name = time() . '.' . $request->img->extension();
+         $destinationPath = 'images/category';
+         $request->img->move(public_path($destinationPath), $name);
+         $categoryUpdate->image = $name;
+      }
+      $categoryUpdate->save();
+
+      // $category->where('id', $request->id)->update([
+      //    'name' => $request->name
+      // ]);
+      return redirect()->route('index.category')->with('message', 'Category updeted');
    }
 }

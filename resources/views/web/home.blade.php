@@ -52,17 +52,21 @@
 <div class="categories-shop">
     <div class="container">
         <div class="row">
+          @foreach($category as $key => $value)
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          
                 <div class="shop-cat-box">
-                    <img class="img-fluid" src="images/t-shirts-img.jpg" alt="" />
-                    <a class="btn hvr-hover" href="#">T-shirts</a>
+                    <img class="img-fluid" src="{{ asset('/images/category/'.$value->image) }}" alt="" />
+                    <a class="btn hvr-hover" href="categoryId={{$value->id}}">{{$value->name}}</a>
                 </div>
-                <div class="shop-cat-box">
+                {{-- <div class="shop-cat-box">
                     <img class="img-fluid" src="images/shirt-img.jpg" alt="" />
                     <a class="btn hvr-hover" href="#">Shirt</a>
-                </div>
+                </div> --}}
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            @endforeach
+
+            {{-- <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="shop-cat-box">
                     <img class="img-fluid" src="images/wallet-img.jpg" alt="" />
                     <a class="btn hvr-hover" href="#">Wallet</a>
@@ -81,7 +85,7 @@
                     <img class="img-fluid" src="images/women-shoes-img.jpg" alt="" />
                     <a class="btn hvr-hover" href="#">Women Shoes</a>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

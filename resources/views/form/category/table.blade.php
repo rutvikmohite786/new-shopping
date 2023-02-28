@@ -3,6 +3,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
+      <th scope="col">Image</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -12,6 +13,7 @@
     <tr>
       <th scope="row">{{$key+1}}</th>
       <td>{{$value->name}}</td>
+       <td><img class="img" src="{{ asset('images/category/'.$value->image) }}">
       <td>
       <a type="button" href="/category/edit/{{$value->id}}" class="btn btn-primary update">update</a>
       <a type="button" href="/category/delete/{{$value->id}}" class="btn btn-danger delete">delete</a>
