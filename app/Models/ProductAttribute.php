@@ -13,7 +13,8 @@ class ProductAttribute extends Model
         'product_id',
         'attribute_id',
         'attribute_value',
-        'selling_price'
+        'selling_price',
+        'quantity'
     ];
 
      //validation rule
@@ -22,7 +23,8 @@ class ProductAttribute extends Model
         'product'=>'required',
         'atter'=>'required',
         'attervalue'=>'required',
-        'sellingprice'=>'required'
+        'sellingprice'=>'required',
+        'quantity'=>'required'
     ];
     public function product()
     {

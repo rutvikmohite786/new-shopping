@@ -16,6 +16,13 @@ use App\http\Controllers\Admin\Product\ProductPricestocksController;
 use App\http\Controllers\Admin\Product\BrandController;
 use App\http\Controllers\Admin\Product\BannerController;
 use App\http\Controllers\Front\DashboardController;
+use App\http\Controllers\Front\ProductController as FrontProductController;
+use App\http\Controllers\Admin\FilterController;
+use App\http\Controllers\Front\PaymentController;
+
+
+
+
 
 
 
@@ -139,6 +146,11 @@ Route::group(['middleware' => ['adminauth']], function () {
         Route::post('banner/product/update', 'update')->name('banner.update');
         Route::get('banner/product/delete/{id}', 'delete')->name('banner.delete');
     });
+
+    //filter
+    Route::controller(FilterController::class)->group(function () {
+        Route::any('filter/user', 'userFilter')->name('user.filter');
+    });
 });
 
 Route::group(['middleware' => ['userauth']], function () {
@@ -151,6 +163,19 @@ Route::controller(DashboardController::class)->group(function () {
     Route::get('contact', 'contactUs')->name('contact');
     Route::get('about', 'aboutUs')->name('about');
 });
+
+Route::controller(FrontProductController::class)->group(function () {
+    Route::get('user/categoryId={id}', 'catgoryProductList')->name('web.category');
+    Route::get('user/product={id}', 'getproductDetail')->name('web.product.detail');
+    Route::post('user/add/card', 'addtoCart')->name('web.product.add');
+});
+
+Route::controller(PaymentController::class)->group(function () {
+    Route::post('user/payment/detail', 'produtPaymentDetail')->name('web.payment.detail');
+    Route::post('stripe','stripePost')->name('stripe.post');
+
+});
+
 
 //user login routes
 Route::controller(UserLoginController::class)->group(function () {

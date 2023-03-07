@@ -6,7 +6,8 @@ $(document).ready(function() {
             product:"required",
             atter:"required",
             sellingprice:"required",
-            attervalue :"required"
+            attervalue :"required",
+            quantity:"required"
         }
     });
 });

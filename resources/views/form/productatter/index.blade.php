@@ -29,7 +29,7 @@
 <div class="container">
     <!-- Button trigger modal -->
     <a type="button" href="/atter/product/add" class="btn btn-primary open-model">
-        Add Color
+        Add Attribute
     </a>
 
     <div class="addcategory">

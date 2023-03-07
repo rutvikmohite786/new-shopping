@@ -52,6 +52,7 @@ class CategoryController extends Controller
          return redirect()->back()->withErrors($validator);
       }
       $categoryUpdate = $category->find($request->id);
+      $categoryUpdate->name = $request->name;
       if (isset($request->img)) {
          $validator2 = Validator::make($request->all(), $category->rules2);
          if ($validator2->fails()) {

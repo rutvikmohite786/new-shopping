@@ -6,4 +6,7 @@ $(document).ready(function() {
             status:"required"
         , }
     });
+    $(document).on("click",".opn-filter",function() {
+        $('.filter').toggle();
+    });
 });

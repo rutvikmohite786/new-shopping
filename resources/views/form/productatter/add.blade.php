@@ -11,6 +11,13 @@
             @endif
         </div>
         <div class="form-group">
+            <label for="exampleInputEmail1">Quantity</label>
+            <input type="number" name="quantity"  class="form-control" placeholder="Enter Product">
+            @if ($errors->has('quantity'))
+            <span class="text-danger">{{ $errors->first('quantity') }}</span>
+            @endif
+        </div>
+        <div class="form-group">
             <label for="exampleInputEmail1">Selling Price</label>
             <input type="text" name="sellingprice" class="form-control" placeholder="Enter Product">
             @if ($errors->has('sellingprice'))
@@ -29,7 +36,7 @@
             <span class="text-danger">{{ $errors->first('color') }}</span>
             @endif
         </div>
-         <div class="form-group">
+        <div class="form-group">
             <label for="exampleFormControlSelect2">Select attribute</label>
             <select class="form-control" id="exampleFormControlSelect2" name="atter">
                 <option value="">Select Option</option>
@@ -41,7 +48,7 @@
             <span class="text-danger">{{ $errors->first('atter') }}</span>
             @endif
         </div>
-         <div class="form-group">
+        <div class="form-group">
             <label for="exampleFormControlSelect3">Select product</label>
             <select class="form-control" id="exampleFormControlSelect3" name="product">
                 <option value="">Select Option</option>

@@ -31,7 +31,7 @@
             @endif
         </div>
           <div class="form-group">
-          <img class="img" src="{{ asset('banner/slider/'.$banner->image) }}">
+          <img class="img" src="{{ asset('/images/banner/slider/'.$banner->image) }}">
          </div>
         <div class="form-group fileinput">
             <label for="exampleFormControlFile1">Example file input</label>

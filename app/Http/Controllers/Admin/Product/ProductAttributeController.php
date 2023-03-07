@@ -37,7 +37,8 @@ class ProductAttributeController extends Controller
             'product_id' => $request->product,
             'attribute_id' => $request->atter,
             'attribute_value' => $request->attervalue,
-            'selling_price' => $request->sellingprice
+            'selling_price' => $request->sellingprice,
+            'quantity'=>$request->quantity
         ]);
         return redirect()->route('index.attribute.product')->with('message', 'Color added');
     }
@@ -61,7 +62,8 @@ class ProductAttributeController extends Controller
             'product_id' => $request->product,
             'attribute_id' => $request->atter,
             'attribute_value' => $request->attervalue,
-            'selling_price' => $request->sellingprice
+            'selling_price' => $request->sellingprice,
+            'quantity'=>$request->quantity
         ]);
         return redirect()->route('index.attribute.product')->with('message', 'Product attribute has benn updated');
     }

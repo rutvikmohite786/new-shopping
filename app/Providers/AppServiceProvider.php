@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use App\Models\Category;
+use App\Models\UserCart;
+use Auth;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -15,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+       
     }
 
     /**
@@ -24,9 +27,10 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
+    {   
         Paginator::useBootstrapFive();
         Paginator::useBootstrapFour();
+        view()->share('category', Category::all());
 
     }
 }

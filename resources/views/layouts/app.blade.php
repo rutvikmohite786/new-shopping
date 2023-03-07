@@ -36,6 +36,20 @@
             height: 120px;
         }
 
+        .filter {
+            width: 630px;
+            height: 300px;
+            background-color: white;
+            z-index: 1;
+            position: fixed;
+            display: none;
+        }
+
+        .user-filter {
+            margin-left: 545px;
+            margin-top: 152px;
+        }
+
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -271,7 +285,7 @@
                                                 <p>Brand</p>
                                             </a>
                                         </li>
-                                         <li class="nav-item">
+                                        <li class="nav-item">
                                             <a href="{{route('index.banner.product')}}" class="nav-link {{ (request()->is('banner/*')) || (request()->is('banner')) ? 'active' : '' }}">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Slidder Banner</p>
@@ -321,6 +335,23 @@
                                             <a href="{{route('index.attribute.product')}}" class="nav-link {{ (request()->is('atter/product/*')) || (request()->is('atter/product')) ? 'active' : '' }}">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Product Attribute</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item setting">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-chart-pie"></i>
+                                        <p>
+                                            Setting
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="{{route('index.attribute')}}" class="nav-link {{ (request()->is('attribute/*')) || (request()->is('attribute')) ? 'active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Site</p>
                                             </a>
                                         </li>
                                     </ul>

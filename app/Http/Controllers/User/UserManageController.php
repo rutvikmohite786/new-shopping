@@ -18,7 +18,7 @@ use App\Jobs\UserPasswordResetJob;
 
 class UserManageController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
       $user = User::with('status')->paginate(config('const.pagination'));
       return view('form.user.index', compact('user'));
     }

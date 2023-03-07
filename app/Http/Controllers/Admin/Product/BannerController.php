@@ -28,7 +28,7 @@ class BannerController extends Controller
         $banner->link = $request->link;
         //image store
         $name = time() . '.' . $request->img->extension();
-        $destinationPath = 'banner/slider';
+        $destinationPath = 'images/banner/slider';
         $request->img->move(public_path($destinationPath), $name);
 
         $banner->image =  $name;
@@ -49,10 +49,14 @@ class BannerController extends Controller
         }
         $bannerUpdate = $banner->find($request->id);
         $bannerUpdate->name = $request->name;
-        $bannerUpdate->description =  $request->desc;
+        $bannerUpdate->description =  $request->desc;   
         $bannerUpdate->link = $request->link;
         if($request->img){
-            $destinationPath = 'banner/slider';
+            $validator2 = Validator::make($request->all(), $banner->rules2);
+            if ($validator2->fails()) {
+                return redirect()->back()->withErrors($validator2);
+            }
+            $destinationPath = 'images/banner/slider';
             if(File::exists($bannerUpdate->image.'/'.$destinationPath)) {
                 File::delete($bannerUpdate->image.'/'.$destinationPath);
             }
@@ -61,6 +65,7 @@ class BannerController extends Controller
             $bannerUpdate->image =  $name;
         }
         $bannerUpdate->save();
+        return redirect()->route('index.banner.product')->with('message', 'Banner update');
     }
     public function delete($id){
        SliderBaner::where('id',$id)->delete();

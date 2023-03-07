@@ -203,6 +203,7 @@
                     $("body").toggleClass("on-side");
                 });
             });
+
             $(".side .close-side").on("click", function(e){
                 e.preventDefault();
                 $("nav.navbar.bootsnav > .side").removeClass("on");

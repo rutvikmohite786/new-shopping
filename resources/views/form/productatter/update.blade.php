@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <form action="/atter/product/update" method="post" id="atterform">
-    <input type="hidden" name="id" value="{{$atterProduct->id}}">
+        <input type="hidden" name="id" value="{{$atterProduct->id}}">
 
         @csrf
         <div class="form-group">
@@ -20,6 +20,13 @@
             @endif
         </div>
         <div class="form-group">
+            <label for="exampleInputEmail1">Quantity</label>
+            <input type="number" name="quantity" value="{{$atterProduct->quantity}}" class="form-control" placeholder="Enter Product">
+            @if ($errors->has('quantity'))
+            <span class="text-danger">{{ $errors->first('quantity') }}</span>
+            @endif
+        </div>
+        <div class="form-group">
             <label for="exampleFormControlSelect1">Select color</label>
             <select class="form-control" id="exampleFormControlSelect1" name="color">
                 <option value="">Select Option</option>
@@ -31,7 +38,7 @@
             <span class="text-danger">{{ $errors->first('color') }}</span>
             @endif
         </div>
-         <div class="form-group">
+        <div class="form-group">
             <label for="exampleFormControlSelect2">Select attribute</label>
             <select class="form-control" id="exampleFormControlSelect2" name="atter">
                 <option value="">Select Option</option>
@@ -43,12 +50,12 @@
             <span class="text-danger">{{ $errors->first('atter') }}</span>
             @endif
         </div>
-         <div class="form-group">
+        <div class="form-group">
             <label for="exampleFormControlSelect3">Select product</label>
             <select class="form-control" id="exampleFormControlSelect3" name="product">
                 <option value="">Select Option</option>
                 @foreach($product as $key => $value)
-                <option value="{{$value->id}}"  {{ $value->id == $atterProduct->product_id  ? 'selected' : ''}}>{{$value->name}}</option>
+                <option value="{{$value->id}}" {{ $value->id == $atterProduct->product_id  ? 'selected' : ''}}>{{$value->name}}</option>
                 @endforeach
             </select>
             @if ($errors->has('product'))

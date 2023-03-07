@@ -14,7 +14,7 @@
         <tr>
             <th scope="row">{{$key+1}}</th>
             <td>{{$value->name}}</td>
-            <td><img class="img" src="{{ asset('banner/slider/'.$value->image) }}">
+            <td><img class="img" src="{{ asset('/images/banner/slider/'.$value->image) }}">
             </td>
             <td>{{$value->description}}</td>
             <td>

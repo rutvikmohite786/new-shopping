@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,10 +19,10 @@
     <!-- Site Icons -->
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-       <link rel="stylesheet" href="{{ asset('web/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('web/css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('web/css/responsive.css') }}">
-        <link rel="stylesheet" href="{{ asset('web/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('web/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('web/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('web/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('web/css/custom.css') }}">
 
 </head>
 
@@ -66,10 +67,10 @@
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="custom-select-box">
                         <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
-						<option>¥ JPY</option>
-						<option>$ USD</option>
-						<option>€ EUR</option>
-					</select>
+                            <option>¥ JPY</option>
+                            <option>$ USD</option>
+                            <option>€ EUR</option>
+                        </select>
                     </div>
                     <div class="right-phone-box">
                         <p>Call US :- <a href="#"> +11 900 800 100</a></p>
@@ -95,8 +96,8 @@
                 <!-- Start Header Navigation -->
                 <div class="navbar-header">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fa fa-bars"></i>
-                </button>
+                        <i class="fa fa-bars"></i>
+                    </button>
                     <a class="navbar-brand" href="index.html"><img src="images/logo.png" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
@@ -104,7 +105,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="{{route('user')}}">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{route('about')}}">About Us</a></li>
                         <li class="dropdown megamenu-fw">
                             <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
@@ -113,7 +114,7 @@
                                     <div class="row">
 
                                         @foreach($category as $key => $value)
-                                            
+
                                         <div class="col-menu col-md-3">
                                             <h6 class="title">{{$value->name}}</h6>
                                             <div class="content">
@@ -126,7 +127,7 @@
                                         </div>
 
                                         @endforeach
-                                      
+
                                     </div>
                                     <!-- end row -->
                                 </li>
@@ -141,15 +142,15 @@
                                 <li><a href="wishlist.html">Wishlist</a></li>
                                 <li><a href="shop-detail.html">Shop Detail</a></li>
                                 @if(auth()->user())
-                                <li><a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
-                                 </a>
-                                 @endif
-                                <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
+                                    </a>
+                                    @endif
+                                    <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
                                         @csrf
-                                </form></li>
+                                    </form>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="service.html">Our Service</a></li>
@@ -163,9 +164,12 @@
                     <ul>
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         <li class="side-menu"><a href="#">
-						<i class="fa fa-shopping-bag"></i>
-                            <span class="badge">3</span>
-					</a></li>
+                                <i class="fa fa-shopping-cart"></i>
+                              
+                                <span class="badge">{{user_cart_data()->count()}}
+                        </span>
+                        </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- End Atribute Navigation -->
@@ -175,25 +179,15 @@
                 <a href="#" class="close-side"><i class="fa fa-times"></i></a>
                 <li class="cart-box">
                     <ul class="cart-list">
+                    
+                       @foreach(user_cart_data() as $key => $value)
                         <li>
                             <a href="#" class="photo"><img src="images/img-pro-01.jpg" class="cart-thumb" alt="" /></a>
                             <h6><a href="#">Delica omtantur </a></h6>
                             <p>1x - <span class="price">$80.00</span></p>
-                        </li>
-                        <li>
-                            <a href="#" class="photo"><img src="images/img-pro-02.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Omnes ocurreret</a></h6>
-                            <p>1x - <span class="price">$60.00</span></p>
-                        </li>
-                        <li>
-                            <a href="#" class="photo"><img src="images/img-pro-03.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Agam facilisis</a></h6>
-                            <p>1x - <span class="price">$40.00</span></p>
-                        </li>
-                        <li class="total">
-                            <a href="#" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                            <span class="float-right"><strong>Total</strong>: $180.00</span>
-                        </li>
+                        </li>    
+                        @endforeach
+                  
                     </ul>
                 </li>
             </div>
@@ -214,28 +208,10 @@
         </div>
     </div>
 
-     @yield('content')
-    <!-- End Top Search -->
-
-    <!-- Start Slider -->
-    
-    <!-- End Slider -->
-
-    <!-- Start Categories  -->
-   
-    <!-- End Categories -->
-
-    <!-- Start Products  -->
-   
-    <!-- End Products  -->
-
-    <!-- Start Blog  -->
-   
-    <!-- End Blog  -->
-
+    @yield('content')
 
     <!-- Start Instagram Feed  -->
-    <div class="instagram-box">
+    {{-- <div class="instagram-box">
         <div class="main-instagram owl-carousel owl-theme">
             <div class="item">
                 <div class="ins-inner-box">
@@ -318,7 +294,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- End Instagram Feed  -->
 
 
@@ -331,7 +307,7 @@
                         <div class="footer-widget">
                             <h4>About ThewayShop</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                </p>
+                            </p>
                             <ul>
                                 <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
                                 <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
@@ -400,6 +376,9 @@
     <script src="{{ asset('web/js/form-validator.min.js') }}"></script>
     <script src="{{ asset('web/js/contact-form-script.js') }}"></script>
     <script src="{{ asset('web/js/custom.js') }}"></script>
+
+    @yield('footer')
+
 
 </body>
 
