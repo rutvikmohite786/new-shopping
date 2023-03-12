@@ -1,5 +1,11 @@
 @extends('layouts.web')
 @section('content')
+<style>
+    .img-fluid{
+        height: 345px !important;
+
+    }
+    </style>
 
 <!-- Start Slider -->
 <div class="container-fluid">

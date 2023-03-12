@@ -9,9 +9,10 @@ use Stripe;
 
 class PaymentController extends Controller
 {
-    public function produtPaymentDetail()
+
+    public function produtPaymentDetail(Request $request)
     {
-        return view('web.payment.buy');
+        return view('web.payment.buy',['data'=>$request->all()]);
     }
     public function stripePost(Request $request)
     {
@@ -19,7 +20,7 @@ class PaymentController extends Controller
             'sk_test_51MiZ7ZSACc6Xcr5BjtHIfAqZXuHzZw2dywB5pGuALdaM02BKjKkvZPWlL6c6xz6gSa3uj9UnwNM6Xar2m3kCiwcE00sgxULXUr'
         );
         $stripe->paymentIntents->create([
-            'amount' => 2000,
+            'amount' => 5000,
             'currency' => 'inr',
             'automatic_payment_methods' => [
                 'enabled' => true,

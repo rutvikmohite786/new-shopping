@@ -14,6 +14,7 @@
       <th scope="row">{{$key+1}}</th>
       <td>{{$value->category->name}}</td>
       <td>{{$value->name}}</td>
+      <td><img class="img" src="{{ asset('images/subcategory/'.$value->image) }}">
       <td>
       <a type="button" href="/subcategory/edit/{{$value->id}}" class="btn btn-primary update">update</a>
       <a type="button" href="/subcategory/delete/{{$value->id}}" class="btn btn-danger delete">delete</a>

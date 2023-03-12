@@ -27,6 +27,12 @@ class SubCategoryController extends Controller
       if ($validator->fails()) {
          return redirect()->back()->withErrors($validator);
       }
+      //image store
+      $name = time() . '.' . $request->img->extension();
+      $destinationPath = 'images/subcategory';
+      $request->img->move(public_path($destinationPath), $name);
+      $sub->image = $name;
+
       $sub->categories_id =  $request->category;
       $sub->name = $request->name;
       $sub->save();
@@ -47,10 +53,21 @@ class SubCategoryController extends Controller
       $validator = Validator::make($request->all(),$subcategory->rules);
       if ($validator->fails()) {
          return redirect()->back()->withErrors($validator);
+      } 
+      if (isset($request->img)) {
+        // $validator2 = Validator::make($request->all(), $category->rules2);
+        // if ($validator2->fails()) {
+        //    return redirect()->back()->withErrors($validator2);
+        // }
+        $name = time() . '.' . $request->img->extension();
+        $destinationPath = 'images/subcategory';
+        $request->img->move(public_path($destinationPath), $name);
+        //$categoryUpdate->image = $name;
       }
       $subcategory->where('id',$request->id)->update([
         'name'=>$request->name,
-        'categories_id'=>$request->category
+        'categories_id'=>$request->category,
+        'image'=>$name
      ]);
      return redirect()->route('index.subcategory')->with('message','Category updeted');
   }

@@ -8,6 +8,9 @@
     color: #ffffff;
     border: none;
 }
+.activeAttr{
+    background-color: #d33b33
+}
 </style>
 <div class="all-title-box">
     <div class="container">
@@ -67,7 +70,7 @@
                             <h4>Short Description:</h4>
                             <p>Nam sagittis a augue eget scelerisque. Nullam lacinia consectetur sagittis. Nam sed neque id eros fermentum dignissim quis at tortor. Nullam ultricies urna quis sem sagittis pharetra. Nam erat turpis, cursus in ipsum at,
                                 tempor imperdiet metus. In interdum id nulla tristique accumsan. Ut semper in quam nec pretium. Donec egestas finibus suscipit. Curabitur tincidunt convallis arcu. </p>
-                            <form action="{{route('web.payment.detail')}}" method="post">
+                            <form action="{{route('web.payment.detail')}}" method="get">
                             <input type="hidden" name="id" value="{{$produtDetail->id}}">
 
                             @csrf
@@ -94,25 +97,27 @@
                                     </div>
                                 </li>
                             </ul>
-                            @foreach($produtDetail->attribute as $key => $value)
-                                
-                            <ul>
+
+                            @foreach($produtDetail->attribute as $key => $value) 
+                            @if($key==0)
+                            <h2>{{$value->atter->value}}</h2>
+                            <input type="hidden" value="{{$value->id}}" name="attribute_id">
+                            @endif
+                            <ul class="{{$key == 0 ? 'activeAttr' :'' }}" id="{{$value->atter->id}}">
                                 <li>
                                     <div class="form-group size-st">
                                         <label class="size-label">Size</label>
-                                        <input class="form-control" id="quantity" value="{{$value->atter->name}}" type="text">
+                                        <input class="form-control" id="quantity" value="{{$value->attribute_value}}" type="text">
                                     </div>
                                 </li>
                                 <li>
                                     <div class="form-group quantity-box">
-                                        <label class="control-label">Quantity</label>
-                                        <input class="form-control" id="quantity" value="{{$value->atter->value}}" type="text">
+                                        <label class="control-label">Price</label>
+                                        <input class="form-control" id="quantity"  type="text" value="{{$value->selling_price}}">
                                     </div>
                                 </li>
                             </ul>
                             @endforeach
-
-
 
                             <div class="price-box-bar">
                                 <div class="cart-and-bay-btn">
@@ -311,6 +316,8 @@
 <script>
     $(".add-cart").click(function() {
         let quantity = $('#quantity').val();
+        let attribute_id = $('.activeAttr').attr('id');
+        console.log(attribute_id);
         let product_id = $('#product_id').val()
         $.ajaxSetup({
             headers: {
@@ -322,7 +329,8 @@
             , url: '/user/add/card'
             , data: {
                 'product_id': product_id
-                , 'quantity': quantity
+                , 'quantity': quantity,
+                'product_attribute_id':attribute_id
             }
             , dataType: 'json'
             , success: function(data) {

@@ -19,11 +19,8 @@ use App\http\Controllers\Front\DashboardController;
 use App\http\Controllers\Front\ProductController as FrontProductController;
 use App\http\Controllers\Admin\FilterController;
 use App\http\Controllers\Front\PaymentController;
-
-
-
-
-
+use App\http\Controllers\Front\Payment\PaypalPaymentController;
+use App\http\Controllers\Front\Payment\SubscriptionController;
 
 
 
@@ -157,6 +154,24 @@ Route::group(['middleware' => ['userauth']], function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/user/new', 'index')->name('user');
     });
+
+    Route::controller(PaymentController::class)->group(function () {
+        Route::get('user/payment/detail', 'produtPaymentDetail')->name('web.payment.detail');
+        Route::post('stripe','stripePost')->name('stripe.post');
+    }); 
+    
+    Route::controller(SubscriptionController::class)->group(function () {
+        Route::get('user/subscription/plan', 'index')->name('web.subscription.detail');
+        Route::get('user/subscription/{id}', 'paymentSubscription')->name('web.subscription.show');
+        Route::post('user/subscription/plan/store', 'buySubscription')->name('web.subscription.store');
+    });
+
+    Route::controller(PaypalPaymentController::class)->group(function () {
+        Route::post('paypal', 'postPaymentWithpaypal')->name('web.paypal');
+        Route::get('paypal', 'postPaymentWithpaypal')->name('status');
+
+    });
+    
 });
 
 Route::controller(DashboardController::class)->group(function () {
@@ -166,14 +181,9 @@ Route::controller(DashboardController::class)->group(function () {
 
 Route::controller(FrontProductController::class)->group(function () {
     Route::get('user/categoryId={id}', 'catgoryProductList')->name('web.category');
+    Route::get('user/subcategoryId={id}', 'subcatgoryProductList')->name('web.subcategory');
     Route::get('user/product={id}', 'getproductDetail')->name('web.product.detail');
     Route::post('user/add/card', 'addtoCart')->name('web.product.add');
-});
-
-Route::controller(PaymentController::class)->group(function () {
-    Route::post('user/payment/detail', 'produtPaymentDetail')->name('web.payment.detail');
-    Route::post('stripe','stripePost')->name('stripe.post');
-
 });
 
 

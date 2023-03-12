@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <form action="/subcategory/store" method="post" id="subcategoryform">
+    <form action="/subcategory/store" method="post" id="subcategoryform" enctype='multipart/form-data'>
         @csrf
         <div class="form-group">
             <label for="exampleInputEmail1">Add Sub Category</label>
@@ -20,6 +20,13 @@
             </select>
             @if ($errors->has('category'))
             <span class="text-danger">{{ $errors->first('category') }}</span>
+            @endif
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Example file input</label>
+            <input type="file" name="img" class="form-control-file" id="exampleFormControlFile1">
+              @if ($errors->has('img'))
+            <span class="text-danger">{{ $errors->first('img') }}</span>
             @endif
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

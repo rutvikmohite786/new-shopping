@@ -141,6 +141,7 @@
                                 <li><a href="my-account.html">My Account</a></li>
                                 <li><a href="wishlist.html">Wishlist</a></li>
                                 <li><a href="shop-detail.html">Shop Detail</a></li>
+                                <li><a href="{{route('web.subscription.detail')}}">Subscription</a></li>
                                 @if(auth()->user())
                                 <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -182,9 +183,9 @@
                     
                        @foreach(user_cart_data() as $key => $value)
                         <li>
-                            <a href="#" class="photo"><img src="images/img-pro-01.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Delica omtantur </a></h6>
-                            <p>1x - <span class="price">$80.00</span></p>
+                            <a href="#" class="photo"><img src="{{ asset('images/'.$value->product->images[0]->name) }}" class="cart-thumb" alt="" /></a>
+                            <h6><a href="#">{{$value->product->name}}</a></h6>
+                            <p>{{$value->quantity}}x - <span class="price">{{$value->productatter->selling_price*$value->quantity}}</span></p>
                         </li>    
                         @endforeach
                   

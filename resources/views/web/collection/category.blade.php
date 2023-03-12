@@ -1,5 +1,6 @@
 @extends('layouts.web')
 @section('content')
+
 <!-- Start All Title Box -->
 <div class="all-title-box">
     <div class="container">
@@ -173,7 +174,6 @@
                                 @if($subcategory->count()>0)
                                     @foreach($subcategory as $key => $value)
                                     @if(isset($value->product[0]))
-                                   
                                     @foreach($value->product as $key2 => $val)
                                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                         <div class="products-single fix">
@@ -191,13 +191,12 @@
                                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                     </ul>
-                                                    <a class="cart" href="#">Add to Cart</a>
+                                                    <a class="cart add-cart" href="javascript:void(0)">Add to Cart</a>
                                                 </div>
                                             </div>
                                             <div class="why-text">
                                                 <h4>{{$val->name}}</h4>
-                                                <h5>{{$val->attribute[0]->selling_price
-                                                }}</h5>
+                                                {{-- <h5>ss{{$val->attribute[0]->selling_price}}</h5> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -224,7 +223,7 @@
                                                     <div class="type-lb">
                                                         <p class="new">New</p>
                                                     </div>
-                                                    <img src="{{ asset('images/'.$val->images[0]->name) }}" class="img-fluid" alt="Image">
+                                                    {{-- <img src="{{ asset('images/'.$val->images[0]->name) }}" class="img-fluid" alt="Image"> --}}
                                                     <div class="mask-icon">
                                                         <ul>
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>

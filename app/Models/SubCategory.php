@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SubCategory extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'dropDownId'];
+    protected $fillable = ['name', 'dropDownId','image'];
 
     //validation rule
     public $rules = [

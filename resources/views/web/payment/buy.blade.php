@@ -4,6 +4,9 @@
     .hide {
         display: none
     }
+    .error{
+        color: red
+    }
 
 </style>
 <!-- Start All Title Box -->
@@ -87,30 +90,30 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="lastName">Last name *</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                                <input type="text" class="form-control" id="lastName" name="last_name" placeholder="" value="" required>
                                 <div class="invalid-feedback"> Valid last name is required. </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="username">Username *</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="username" placeholder="" required>
+                                <input type="text" class="form-control" name="user_name" id="username" placeholder="" required>
                                 <div class="invalid-feedback" style="width: 100%;"> Your username is required. </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="email">Email Address *</label>
-                            <input type="email" class="form-control" id="email" placeholder="">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="">
                             <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
                         </div>
                         <div class="mb-3">
                             <label for="address">Address *</label>
-                            <input type="text" class="form-control" id="address" placeholder="" required>
+                            <input type="text" class="form-control" name="address_1" id="address" placeholder="" required>
                             <div class="invalid-feedback"> Please enter your shipping address. </div>
                         </div>
                         <div class="mb-3">
                             <label for="address2">Address 2 *</label>
-                            <input type="text" class="form-control" id="address2" placeholder=""> </div>
+                            <input type="text" class="form-control" name="address_2" id="address2" placeholder=""> </div>
                         <div class="row">
                             <div class="col-md-5 mb-3">
                                 <label for="country">Country *</label>
@@ -130,7 +133,7 @@
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="zip">Zip *</label>
-                                <input type="text" class="form-control" id="zip" placeholder="" required>
+                                <input type="text" class="form-control" id="zip" name="zip" placeholder="" required>
                                 <div class="invalid-feedback"> Zip code required. </div>
                             </div>
                         </div>
@@ -147,18 +150,19 @@
                         <div class="title"> <span>Payment</span> </div>
                         <div class="d-block my-3">
                             <div class="custom-control custom-radio">
-                                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                                <input id="credit" name="paymentMethod" value="credit" type="radio" class="custom-control-input radio" checked required>
                                 <label class="custom-control-label" for="credit">Credit card</label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                <input id="debit" name="paymentMethod" value="debit" type="radio" class="custom-control-input radio" required>
                                 <label class="custom-control-label" for="debit">Debit card</label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                <input id="paypal" name="paymentMethod" type="radio" value="paypal" class="custom-control-input radio" required>
                                 <label class="custom-control-label" for="paypal">Paypal</label>
                             </div>
                         </div>
+                        <div class="payonline">
                         <div class="row">
                             <div class="col-md-6 mb-3 required">
                                 <label for="cc-name">Name on card</label>
@@ -201,6 +205,7 @@
                             </div>
                         </div>
                         <hr class="mb-1">
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-6 mb-3">
@@ -284,7 +289,7 @@
                                 <hr>
                                 <div class="d-flex gr-total">
                                     <h5>Grand Total</h5>
-                                    <div class="ml-auto h5"> $ 388 </div>
+                                    <div class="ml-auto h5"> {{$data['attribute_id']}}</div>
                                 </div>
                                 <hr>
                             </div>
@@ -314,22 +319,21 @@
     $(".require-validation").validate({
         rules: {
             firstName: "required"
-            , lastName: "required"
+            , last_name: "required"
             , email: "required"
             , phone: "required"
-            , password: "required"
-            , confirmPassword: "required"
+            , user_name: "required"
             , gender: "required"
-            , dateOfBirth: "required"
-            , address: "required"
-            , city: "required"
-            , state: "required"
-            , zipcode: "required"
+            , address_1: "required"
+            , address_2: "required"
         , }
     });
 
     $('.require-validation').on('submit', function(e) {
-          if (!$form.data('cc-on-file')) {
+          let radio_box = $(":radio:checked").val()
+          console.log(radio_box)
+          if(radio_box!='paypal'){
+           if (!$form.data('cc-on-file')) {
                 e.preventDefault();
                 Stripe.setPublishableKey($form.data('stripe-publishable-key'));
                 Stripe.createToken({
@@ -338,7 +342,7 @@
                     , exp_month: $('.card-expiry-month').val()
                     , exp_year: $('.card-expiry-year').val()
                 }, stripeResponseHandler);
-          }
+           }
            function stripeResponseHandler(status, response) {
             if (response.error) {
                 console.log(response.error)
@@ -352,24 +356,27 @@
                 $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
                 $form.get(0).submit();
             }
-        }
+           }}else{
+               console.log('paypal call')
+           }
+           function paypalResponceHnadler(){
+
+           }
     });
   
-    function stripeResponseHandler(status, response) {
-        if (response.error) {
-            console.log(response.error)
-            $('.error')
-                .removeClass('hide')
-                .find('.alert')
-                .text(response.error.message);
-        } else {
-            /* token contains id, last4, and card type */
-            var token = response['id'];
-            $form.find('input[type=text]').empty();
-            $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-            $form.get(0).submit();
+
+    $('.radio').click(function() {
+        var value = $(":radio:checked").val()
+        console.log('enter')
+        if(value=="credit" || value=="debit"){
+        $('.require-validation').attr('action', '{{route("stripe.post")}}');
+        var html ='<div class="row"><div class="col-md-6 mb-3 required"><label for="cc-name">Name on card</label>                                <input type="text" class="form-control" id="cc-name" placeholder="" required> <small class="text-muted">Fullu name as displayed on card</small>                                <div class="invalid-feedback"> Name on card is required </div>                            </div>                            <div class="col-md-6 mb-3 required">                                <label for="cc-number">Credit card number</label>                                <input autocomplete="off" class="form-control card-number" size="20" type="text">                                                <div class="invalid-feedback"> Credit card number is required </div>                            </div>                        </div>                        <div class="row">                            <div class="col-md-3 mb-3 required">                                <label for="cc-expiration">Expiration</label>                                <input type="text" class="form-control card-expiry-month" id="cc-expiration" placeholder="" required>                                <div class="invalid-feedback"> Expiration date required </div>                            </div>                            <div class="col-md-3 mb-3 required">                                <label for="cc-expiration">Expiration</label>                                <input type="text" class="form-control card-expiry-year" id="cc-expiration" placeholder="" required>                                <div class="invalid-feedback"> Expiration date required </div>                            </div>                            <div class="col-md-3 mb-3">                                <label for="cc-expiration">CVV</label>                                <input type="text" class="form-control card-cvc" id="cc-cvv" placeholder="" required>                                <div class="invalid-feedback"> Security code required </div>                            </div>                            <div class="col-md-6 mb-3">                                <div class="payment-icon">                                    <ul>                                        <li><img class="img-fluid" src="images/payment-icon/1.png" alt=""></li>                                        <li><img class="img-fluid" src="images/payment-icon/2.png" alt=""></li>                                        <li><img class="img-fluid" src="images/payment-icon/3.png" alt=""></li>                                        <li><img class="img-fluid" src="images/payment-icon/5.png" alt=""></li>                                        <li><img class="img-fluid" src="images/payment-icon/7.png" alt=""></li>                                    </ul>                                </div>                            </div>                        </div>                        <hr class="mb-1">'
+        }else{
+        $('.require-validation').attr('action', '{{route("web.paypal")}}');
+        var html = '<div class="row"><div class="col-md-6 mb-3 required"><label for="cc-name">Enter your gmail</label><input type="email" class="form-control" id="cc-name" placeholder="" required> <small class="text-muted">Full yor email</small><div class="invalid-feedback"> Name on card is required </div></div></div>'
         }
-    }
+        $('.payonline').html(html)
+     });
 
 </script>
 @endsection
