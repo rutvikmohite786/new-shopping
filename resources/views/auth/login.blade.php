@@ -1,4 +1,6 @@
 @extends('layouts.master')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -55,7 +57,9 @@
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
-                                </button>
+                                </button> Or You Can Login With<i class="fa fa-google" style="font-size:24px"></i>
+ <i class="fa fa-facebook" style="font-size:24px"></i>
+
 
                                 @if (Route::has('password.request'))
                                 <a class="btn btn-link" href="{{ route('password.request') }}">

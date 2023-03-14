@@ -6,13 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session;
 use Stripe;
+use App\Models\ProductAttribute;
 
 class PaymentController extends Controller
 {
 
     public function produtPaymentDetail(Request $request)
     {
-        return view('web.payment.buy',['data'=>$request->all()]);
+        $productAttr = ProductAttribute::where('product_id',$request->id)->first();
+        $price = $productAttr->selling_price*$request->quantity;
+        $product_id = $request->id;
+        return view('web.payment.buy',compact('price','product_id'));
+        // return view('web.payment.buy',['data'=>$request->all()]);
     }
     public function stripePost(Request $request)
     {

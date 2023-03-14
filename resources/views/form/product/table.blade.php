@@ -5,6 +5,7 @@
       <th scope="col">Category</th>
       <th scope="col">Sub Category</th>
       <th scope="col">Product</th>
+      <th scope="col">Brand</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
       <td>{{$value->subcategory->category->name}}</td>
       <td>{{$value->subcategory->name}}</td>
       <td>{{$value->name}}</td>
+      <td>{{isset($value->brand) ? $value->brand->name : 'null'}}</td>
       <td>
       <a type="button" href="/product/edit/{{$value->id}}" class="btn btn-primary update">update</a>
       <a type="button" href="/product/delete/{{$value->id}}" class="btn btn-danger delete">delete</a>

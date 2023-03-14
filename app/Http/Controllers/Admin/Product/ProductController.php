@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\ProductImage;
+use App\Models\Brand;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -14,14 +15,15 @@ class ProductController extends Controller
 {
   public function index()
   {
-    $product = Product::with('subcategory.category')->paginate(config('const.pagination'));
+    $product = Product::with('subcategory.category','brand')->paginate(config('const.pagination'));
     $cat = SubCategory::all();
     return view('form.product.product', compact('cat', 'product'));
   }
   public function add()
   {
     $subcategory = SubCategory::all();
-    return view('form.product.add', compact('subcategory'));
+    $brand = Brand::all();
+    return view('form.product.add', compact('subcategory','brand'));
   }
   public function store(Request $request)
   {
@@ -32,6 +34,7 @@ class ProductController extends Controller
     }
     $product->sub_categories_id =  $request->subcategory;
     $product->name = $request->name;
+    $product->brand_id = isset($request->brand) ? $request->brand : null ;
     $product->save();
 
     //store images
@@ -52,15 +55,17 @@ class ProductController extends Controller
   }
   public function edit($id)
   {
-    $data =  Product::with('subcategory', 'images')->where('id', $id)->first();
+    $data =  Product::with('subcategory','images','brand')->where('id', $id)->first();
     $subcategory = SubCategory::all();
-    return view('form.product.update', compact('data', 'subcategory'));
+    $brand = Brand::all();
+    return view('form.product.update', compact('data', 'subcategory','brand'));
   }
   public function update(Request $request)
   {
     $product =  Product::find($request->id);
     $product->name = $request->name;
     $product->sub_categories_id = $request->subcategory;
+    $product->brand_id = isset($request->brand) ? $request->brand : null ;
     $product->save();
     
     //store images

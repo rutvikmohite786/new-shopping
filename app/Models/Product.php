@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'sub_categories_id'];
+    protected $fillable = ['name', 'sub_categories_id','brand_id'];
     //validation rule
     public $rules = [
         'name' => 'required',
@@ -25,5 +25,9 @@ class Product extends Model
     public function attribute()
     {
         return $this->hasMany(ProductAttribute::class, 'product_id');
+    }
+    public function brand()
+    {
+        return $this->hasOne(Brand::class, 'id', 'brand_id');
     }
 }

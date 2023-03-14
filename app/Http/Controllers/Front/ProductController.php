@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\SubCategory;
 use App\Models\UserCart;
+use App\Models\Brand;
 use Auth;
 
 class ProductController extends Controller
@@ -19,9 +20,13 @@ class ProductController extends Controller
       // return view('web.collection.category',compact('subcategory','cat_id'));
     }
     public function subcatgoryProductList($id){
-      $subcategory = SubCategory::where('id',$id)->with('product')->get();
-      $cat_id = $id;
-      return view('web.collection.category',compact('subcategory','cat_id'));
+      $subcategory = SubCategory::where('id',$id)->with('product.brand','category')->get();
+      $brand = Brand::whereHas('product.subcategory',function($q) use($id){
+           $q->where('id', $id);
+      })->get();
+      $cat_id = $subcategory[0]->category->id;
+      $sub_id = $id;
+      return view('web.collection.category',compact('subcategory','cat_id','sub_id','brand'));
     }
     public function getproductDetail($id){
       $produtDetail = Product::with('attribute.atter')->find($id);

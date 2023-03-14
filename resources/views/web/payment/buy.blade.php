@@ -267,16 +267,16 @@
                                 <hr class="my-1">
                                 <div class="d-flex">
                                     <h4>Sub Total</h4>
-                                    <div class="ml-auto font-weight-bold"> $ 440 </div>
+                                    <div class="ml-auto font-weight-bold"> ${{$price}} </div>
                                 </div>
                                 <div class="d-flex">
                                     <h4>Discount</h4>
-                                    <div class="ml-auto font-weight-bold"> $ 40 </div>
+                                    <div class="ml-auto font-weight-bold"> $ 00</div>
                                 </div>
                                 <hr class="my-1">
                                 <div class="d-flex">
                                     <h4>Coupon Discount</h4>
-                                    <div class="ml-auto font-weight-bold"> $ 10 </div>
+                                    <div class="ml-auto font-weight-bold"> $ 00</div>
                                 </div>
                                 <div class="d-flex">
                                     <h4>Tax</h4>
@@ -289,7 +289,7 @@
                                 <hr>
                                 <div class="d-flex gr-total">
                                     <h5>Grand Total</h5>
-                                    <div class="ml-auto h5"> {{$data['attribute_id']}}</div>
+                                    <div class="ml-auto h5"> {{$price}}</div>
                                 </div>
                                 <hr>
                             </div>
