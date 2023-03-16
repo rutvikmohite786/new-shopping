@@ -57,8 +57,15 @@
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
-                                </button> Or You Can Login With<i class="fa fa-google" style="font-size:24px"></i>
- <i class="fa fa-facebook" style="font-size:24px"></i>
+                                </button>
+                                <br><br>
+
+                                @if (request()->is('login'))
+                               <p>Not a member? <a href="#!">Register</a></p>
+                               <p>or sign up with:</p>
+                                {{-- <a href="{{route('redirect.google')}}"><i class="fa fa-google" style="font-size:24px"></i></a> --}}
+                                {{-- <i class="fa fa-facebook" style="font-size:24px"></i> --}}
+                                @endif
 
 
                                 @if (Route::has('password.request'))
@@ -68,6 +75,28 @@
                                 @endif
                             </div>
                         </div>
+                        
+                         @if (request()->is('login'))
+                        <!-- Register buttons -->
+                        <div class="text-center">
+                            
+                            <a type="button" class="btn btn-link btn-floating mx-1">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+
+                            <a type="button" href="{{route('redirect.google')}}" class="btn btn-link btn-floating mx-1">
+                                <i class="fa fa-google"></i>
+                            </a>
+
+                            <a type="button" class="btn btn-link btn-floating mx-1">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+
+                            <a type="button" class="btn btn-link btn-floating mx-1">
+                                <i class="fa fa-github"></i>
+                            </a>
+                        </div>
+                        @endif
                     </form>
                 </div>
             </div>

@@ -73,46 +73,24 @@
                             <input type="hidden" name="id" value="{{$produtDetail->id}}">
 
                             @csrf
+                            @foreach($attribute as $key => $value)    
                             <ul>
+                            <h2>{{$value->value}}</h2>
+                                @foreach($value->attribute as $key2 => $val) 
                                 <li>
                                     <div class="form-group size-st">
-                                        <label class="size-label"></label>
-                                        <select id="basic" class="selectpicker show-tick form-control" name="size">
-                                            @foreach($produtDetail->attribute as $key => $value) 
-                                            <option value="{{$value->id}}">{{$value->attribute_value}}</option>
-                                            @endforeach
-                                        </select>
+                                         <a class="btn hvr-hover" >{{$val->attribute_value}}</a>
                                     </div>
                                 </li>
-                                <li>
+                                @endforeach
+                                {{-- <li>
                                     <div class="form-group quantity-box">
                                         <label class="control-label">Quantity</label>
                                         <input class="form-control" name="quantity" id="quantity" value="1" min="1" max="20" type="number">
                                     </div>
-                                </li>
+                                </li> --}}
                             </ul>
-
-                            {{-- @foreach($produtDetail->attribute as $key => $value) 
-                            @if($key==0)
-                            <h2>{{$value->atter->value}}</h2>
-                            <input type="hidden" value="{{$value->id}}" name="attribute_id">
-                            @endif
-                            <ul class="{{$key == 0 ? 'activeAttr' :'' }}" id="{{$value->atter->id}}">
-                                <li>
-                                    <div class="form-group size-st">
-                                        <label class="size-label">Size</label>
-                                        <input class="form-control" id="quantity" value="{{$value->attribute_value}}" type="text">
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-group quantity-box">
-                                        <label class="control-label">Price</label>
-                                        <input class="form-control" id="quantity"  type="text" value="{{$value->selling_price}}">
-                                    </div>
-                                </li>
-                            </ul>
-                            @endforeach --}}
-
+                            @endforeach
                             <div class="price-box-bar">
                                 <div class="cart-and-bay-btn">
                                     <button class="btn hvr-hover" data-fancybox-close="" >Buy Now</button>

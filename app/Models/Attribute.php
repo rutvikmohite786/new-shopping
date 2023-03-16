@@ -17,4 +17,9 @@ class Attribute extends Model
         'value'=>'required'
     ];
 
+    public function attribute()
+    {
+        return $this->hasMany(ProductAttribute::class);
+    }
+
 }

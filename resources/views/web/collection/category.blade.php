@@ -48,9 +48,6 @@
                                 </div>
                             </div>
                             @endforeach
-                            {{-- <a href="#" class="list-group-item list-group-item-action"> Men <small class="text-muted">(150) </small></a> --}}
-                            {{-- <a href="#" class="list-group-item list-group-item-action">Accessories <small class="text-muted">(11)</small></a>
-                            <a href="#" class="list-group-item list-group-item-action">Bags <small class="text-muted">(22)</small></a> --}}
                         </div>
                     </div>
                     <div class="filter-price-left">
@@ -124,23 +121,27 @@
                                     @foreach($subcategory as $key => $value)
                                     @if(isset($value->product[0]))
                                     @foreach($value->product as $key2 => $val)
+                                    @if(isset($val->attribute[$key2]))
+                                    <input type="hidden" value="{{$val->attribute[$key2]->id}}" id="product_attribute{{$val->id}}">
+                                    @endif
                                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                         <div class="products-single fix">
                                             <div class="box-img-hover">
-                                                <div class="type-lb">
+                                                <div class="type-lb"> 
                                                     <p class="sale">Sale</p>
                                                 </div>
                                                 {{-- {{dd($val->images)}} --}}
                                                 @if(isset($val->images[0]))
                                                 <img src="{{ asset('images/'.$val->images[0]->name) }}" class="img-fluid" alt="Image">
                                                 @endif
+                                                {{-- {{dd($val->cart)}} --}}
                                                 <div class="mask-icon">
                                                     <ul>
                                                         <li><a href="product={{$val->id}}" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
                                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                     </ul>
-                                                    <a class="cart add-cart" href="javascript:void(0)">Add to Cart</a>
+                                                    <a class="cart {{isset($val->cart) ? 'remove-cart' :'add-cart'}}" data-id="{{$val->id}}" href="javascript:void(0)">{{isset($val->cart) ? 'Remove from cart' :'Add to Cart'}}</a>
                                                 </div>
                                             </div>
                                             <div class="why-text">
@@ -196,7 +197,7 @@
                                         @endforeach
                                         @endif
                                         @endforeach
-                                    </div>
+                                    </div>ss
                                 </div>
                             </div>
                         </div>
@@ -208,4 +209,62 @@
     </div>
 </div>
 <!-- End Shop Page -->
+@endsection 
+@section('footer')
+<script>
+    $(".add-cart").click(function() {
+        let quantity = 1
+        let product_id = $(this).data('id')
+        let attribute_id = $('#product_attribute'+product_id).val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "post"
+            , url: '/user/add/card'
+            , data: {
+                'product_id': product_id
+                ,'quantity': quantity,
+                'product_attribute_id':attribute_id
+            }
+            , dataType: 'json'
+            , success: function(data) {
+                console.log(data)
+            }
+            , error: function(data) {
+                console.log(data)
+            }
+        });
+    });
+
+    //remove form the cart
+      $(".remove-cart").click(function() {
+        let quantity = 1
+        let product_id = $(this).data('id')
+        let attribute_id = $('#product_attribute'+product_id).val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "post"
+            , url: '/user/remove/card'
+            , data: {
+                'product_id': product_id
+                ,'quantity': quantity,
+                'product_attribute_id':attribute_id
+            }
+            , dataType: 'json'
+            , success: function(data) {
+                console.log(data)
+            }
+            , error: function(data) {
+                console.log(data)
+            }
+        });
+    });
+</script>
 @endsection

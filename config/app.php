@@ -199,6 +199,10 @@ return [
         App\Providers\RouteServiceProvider::class,
         // Spatie\Permission\PermissionServiceProvider::class,
 
+        Laravel\Socialite\SocialiteServiceProvider::class,
+
+
+
 
     ],
 
@@ -215,8 +219,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'PayPal' => Srmklive\PayPal\Facades\PayPal::class
-
+        'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ])->toArray(),
 
 ];

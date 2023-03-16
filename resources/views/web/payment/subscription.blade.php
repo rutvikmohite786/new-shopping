@@ -1,14 +1,28 @@
 @extends('layouts.web')
   
 @section('content')
+<!-- Start All Title Box -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Subscription</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/user/new">Home</a></li>
+                    <li class="breadcrumb-item active">Subscription</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<!-- End All Title Box -->
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Select Plane:</div>
- 
                 <div class="card-body">
- 
                     <div class="row">
                         @foreach($plans as $plan)
                             <div class="col-md-6">
@@ -32,4 +46,5 @@
         </div>
     </div>
 </div>
+<br>
 @endsection
