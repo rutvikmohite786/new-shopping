@@ -186,6 +186,9 @@ Route::controller(FrontProductController::class)->group(function () {
     Route::post('user/add/card', 'addtoCart')->name('web.product.add');
     Route::post('user/remove/card', 'removetoCart')->name('web.product.remove');
 
+    Route::post('user/change/atter', 'changeAtter')->name('web.product.change.atter');
+
+
 });
 
 

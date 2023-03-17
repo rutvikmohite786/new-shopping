@@ -187,7 +187,7 @@
                             <h6><a href="#">{{$value->product->name}}</a></h6>
                             <p>{{$value->quantity}}x - <span class="price">{{$value->productatter->selling_price*$value->quantity}}</span></p>
                         </li>    
-                        @endforeach
+                        @endforeach 
                         @else
                         <li>
                         No Product Found
@@ -365,7 +365,6 @@
         <p class="footer-company">All Rights Reserved. &copy; 2018 <a href="#">ThewayShop</a> Design By :
             <a href="https://html.design/">html design</a></p>
     </div>
-
     <!-- End copyright  -->
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>

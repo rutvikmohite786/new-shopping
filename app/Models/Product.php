@@ -34,4 +34,7 @@ class Product extends Model
     public function cart(){
         return $this->hasOne(UserCart::class, 'product_id')->where('user_id',Auth::id());
     }
+    public function cartManyProduct(){
+        return $this->hasMany(UserCart::class, 'product_id')->where('user_id',Auth::id());   
+    }
 }
