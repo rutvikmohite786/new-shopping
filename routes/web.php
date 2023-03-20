@@ -177,6 +177,7 @@ Route::group(['middleware' => ['userauth']], function () {
 Route::controller(DashboardController::class)->group(function () {
     Route::get('contact', 'contactUs')->name('contact');
     Route::get('about', 'aboutUs')->name('about');
+    Route::get('service', 'servicePage')->name('service');
 });
 
 Route::controller(FrontProductController::class)->group(function () {
@@ -185,10 +186,7 @@ Route::controller(FrontProductController::class)->group(function () {
     Route::get('user/product={id}', 'getproductDetail')->name('web.product.detail');
     Route::post('user/add/card', 'addtoCart')->name('web.product.add');
     Route::post('user/remove/card', 'removetoCart')->name('web.product.remove');
-
     Route::post('user/change/atter', 'changeAtter')->name('web.product.change.atter');
-
-
 });
 
 
@@ -217,7 +215,6 @@ Route::controller(UserManageController::class)->group(function () {
     Route::get('{email}/password/{token}', 'passwordVerify')->name('user.email.verify');
     Route::post('/password/change', 'passwordChange')->name('password.change');
 });
-
 
 //Google
 Route::get('/login/google', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGoogle'])->name('login.google');

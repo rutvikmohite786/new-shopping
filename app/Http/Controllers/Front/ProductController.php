@@ -41,7 +41,6 @@ class ProductController extends Controller
     $color = Color::withWhereHas('productcolor',function($q) use ($id){
       $q->where('product_id',$id);
     })->get();
-    // dd($color);
     return view('web.view', compact('produtDetail','attribute','userCart','color'));
   }
   public function addtoCart(Request $request)

@@ -356,6 +356,23 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li class="nav-item setting">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-chart-pie"></i>
+                                        <p>
+                                             
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="{{route('index.attribute')}}" class="nav-link {{ (request()->is('attribute/*')) || (request()->is('attribute')) ? 'active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Site</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
                     </ul>

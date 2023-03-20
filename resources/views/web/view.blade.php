@@ -12,6 +12,9 @@
     .activeAttr {
         background-color: #d33b33
     }
+    .activeatter{
+        border:solid 4px black
+    }
 
 </style>
 <div class="all-title-box">
@@ -77,17 +80,13 @@
                                     <h2>{{$value->value}}</h2>
                                     @foreach($value->attribute as $key2 => $val)
                                     <li>
-                                        <div class="form-group size-st">
+                                    <input type="radio" id="atter{{$key}}" name="atter[{{$key}}]" data-id="{{$val->id}}" value="HTML">
+                                    <label for="html{{$key}}">{{$val->attribute_value}}</label><br>
+                                        {{-- <div class="form-group size-st">
                                             <a class="btn hvr-hover attributeval" data-id="{{$val->id}}">{{$val->attribute_value}}</a>
-                                        </div>
+                                        </div> --}}
                                     </li>
                                     @endforeach
-                                    {{-- <li>
-                                    <div class="form-group quantity-box">
-                                        <label class="control-label">Quantity</label>
-                                        <input class="form-control" name="quantity" id="quantity" value="1" min="1" max="20" type="number">
-                                    </div>
-                                </li> --}}
                                 </ul>
                                 @endforeach
                                 <div>
@@ -318,8 +317,6 @@
                 //$(".add-cart").attr('class', 'btn hvr-hover remove-cart');
 
                 $(".add-cart").toggleClass('add-cart remove-cart');
-
-
                 console.log(data.data.product.images[0])
                 var url = 'http://127.0.0.1:8000'
                 var html = '<li><a href="#" class="photo"><img src=' + url + '/' + data.data.product.images[0].path + ' class="cart-thumb" alt="" /></a><h6><a href="#">' + data.data.product.name + '</a></h6><p>8x - <span class="price">90</span></p></li>'
@@ -362,6 +359,8 @@
     });
 
     $(".attributeval").click(function() {
+        $(this).css('border', "solid 4px black");  
+        $(this).addClass('activeatter')
         let quantity = $('#quantity').val();
         let attribute_id = $('#attribute_id').val();
         let attribute_val = $(this).data('id')
@@ -389,6 +388,37 @@
             }
         });
 
+    });
+
+    $("input[type='radio']").change(function(){
+        let quantity = $('#quantity').val();
+        let attribute_val = $(this).data('id')
+        console.log(attribute_id, attribute_val);
+        let product_id = $('#product_id').val()
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "post"
+            , url: '/user/change/atter'
+            , data: {
+                'product_id': product_id
+                , 'quantity': quantity
+                , 'product_attribute_id': attribute_val
+            }
+            , dataType: 'json'
+            , success: function(data) {
+                console.log(data)
+            }
+            , error: function(data) {
+                console.log(data)
+            }
+        });
+
+    
+   
     });
 
 </script>

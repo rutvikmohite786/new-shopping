@@ -22,4 +22,8 @@ class DashboardController extends Controller
     public function contactUs(){
         return view('web.contact');
     }
+    public function servicePage(){
+        return view('web.service');
+
+    }
 }
