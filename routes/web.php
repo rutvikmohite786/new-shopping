@@ -168,7 +168,9 @@ Route::group(['middleware' => ['userauth']], function () {
 
     Route::controller(PaypalPaymentController::class)->group(function () {
         Route::post('paypal', 'postPaymentWithpaypal')->name('web.paypal');
-        Route::get('paypal', 'postPaymentWithpaypal')->name('status');
+        Route::get('sucess', 'success')->name('payment.success');
+        Route::get('cancel', 'cancel')->name('payment.cancel');
+
 
     });
     
@@ -176,6 +178,7 @@ Route::group(['middleware' => ['userauth']], function () {
 
 Route::controller(DashboardController::class)->group(function () {
     Route::get('contact', 'contactUs')->name('contact');
+    Route::post('contact/store','contactStore')->name('contact.store');
     Route::get('about', 'aboutUs')->name('about');
     Route::get('service', 'servicePage')->name('service');
 });

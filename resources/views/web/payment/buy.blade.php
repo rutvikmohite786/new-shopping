@@ -357,6 +357,7 @@
                 $form.get(0).submit();
             }
            }}else{
+                $form.get(0).submit();
                console.log('paypal call')
            }
            function paypalResponceHnadler(){

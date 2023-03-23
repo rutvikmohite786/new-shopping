@@ -1,12 +1,30 @@
-<?php 
-return [ 
-    'client_id' => 'sb-xvpy825244165@business.example.com',
-	'secret' => 'access_token$sandbox$7p3b8wtcqs5qsq9w$748bd443ff046f3bbd2b89b71eb237eb',
-    'settings' => array(
-        'mode' => 'sandbox',
-        'http.ConnectionTimeOut' => 1000,
-        'log.LogEnabled' => true,
-        'log.FileName' => storage_path() . '/logs/paypal.log',
-        'log.LogLevel' => 'FINE'
-    ),
+<?php
+
+return [
+    'mode'    => env('PAYPAL_MODE', 'sandbox'),
+    'sandbox' => [
+        'username'    => env('PAYPAL_SANDBOX_API_USERNAME', ''),
+        'password'    => env('PAYPAL_SANDBOX_API_PASSWORD', ''),
+        'secret'      => env('PAYPAL_SANDBOX_API_SECRET', ''),
+        'certificate' => env('PAYPAL_SANDBOX_API_CERTIFICATE', ''),
+        'app_id'      => 'APP-80W284485P519543T',
+
+    ],
+
+    'live' => [
+        'username'    => env('PAYPAL_LIVE_API_USERNAME', ''),
+        'password'    => env('PAYPAL_LIVE_API_PASSWORD', ''),
+        'secret'      => env('PAYPAL_LIVE_API_SECRET', ''),
+        'certificate' => env('PAYPAL_LIVE_API_CERTIFICATE', ''),
+        'app_id'      => '',
+
+    ],
+
+    'payment_action' => 'Sale',
+    'currency'       => env('PAYPAL_CURRENCY', 'USD'),
+    'billing_type'   => 'MerchantInitiatedBilling',
+    'notify_url'     => '',
+    'locale'         => '',
+    'validate_ssl'   => false,
+
 ];

@@ -273,6 +273,12 @@
                                                 <p>Product</p>
                                             </a>
                                         </li>
+                                          <li class="nav-item">
+                                            <a href="{{route('index.pricestock.product')}}" class="nav-link {{ (request()->is('pricestock/*')) || (request()->is('pricestock')) ? 'active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Featured</p>
+                                            </a>
+                                        </li>
                                         <li class="nav-item">
                                             <a href="{{route('index.pricestock.product')}}" class="nav-link {{ (request()->is('pricestock/*')) || (request()->is('pricestock')) ? 'active' : '' }}">
                                                 <i class="far fa-circle nav-icon"></i>
@@ -360,7 +366,7 @@
                                     <a href="#" class="nav-link">
                                         <i class="nav-icon fas fa-chart-pie"></i>
                                         <p>
-                                             
+                                            Orders
                                             <i class="right fas fa-angle-left"></i>
                                         </p>
                                     </a>
