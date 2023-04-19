@@ -34,25 +34,20 @@
                             <h3>Categories</h3>
                         </div>
                         <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
+                            
                             @foreach($category as $key => $value)
-
                             <div class="list-group-collapse sub-men">
-                                <a class="list-group-item list-group-item-action" href="#sub-men{{$key}}" data-toggle="collapse" aria-expanded="true" aria-controls="sub-men{{$key}}">{{$value->name}} <small class="text-muted">(100)</small>
+                                <a class="list-group-item list-group-item-action" href="#sub-men{{$key}}" data-toggle="collapse" aria-expanded="true" aria-controls="sub-men{{$key}}">{{$value->name}} <small class="text-muted">({{$value->subcategorymany->count()}})</small>
                                 </a>
                                 <div class="collapse {{$value->id == $cat_id ? 'show' : ''}}" id="sub-men{{$key}}" data-parent="#list-group-men">
                                     <div class="list-group">
                                         @foreach($value->subcategorymany as $key => $val)
-                                            
-                                        <a href="#" class="list-group-item list-group-item-action active">{{$val->name}}<small class="text-muted">(50)</small></a>
+                                        <a href="subcategoryId={{$val->id}}" class="list-group-item list-group-item-action {{$value->subcategorymany[$key]->id==$sub_id ? 'active' : ''}}">{{$val->name}}<small class="text-muted">({{isset($val->product) ? $val->product->count() : '0'}})</small></a>
                                         @endforeach
-
                                     </div>
                                 </div>
                             </div>
                             @endforeach
-                            {{-- <a href="#" class="list-group-item list-group-item-action"> Men <small class="text-muted">(150) </small></a> --}}
-                            {{-- <a href="#" class="list-group-item list-group-item-action">Accessories <small class="text-muted">(11)</small></a>
-                            <a href="#" class="list-group-item list-group-item-action">Bags <small class="text-muted">(22)</small></a> --}}
                         </div>
                     </div>
                     <div class="filter-price-left">
@@ -67,75 +62,26 @@
                             </p>
                         </div>
                     </div>
+                    
+                    @if($brand->count()>0)
                     <div class="filter-brand-left">
                         <div class="title-left">
                             <h3>Brand</h3>
                         </div>
                         <div class="brand-box">
                             <ul>
+                                @foreach($brand as $key => $value)
                                 <li>
                                     <div class="radio radio-danger">
-                                        <input name="survey" id="Radios1" value="Yes" type="radio">
-                                        <label for="Radios1"> Supreme </label>
+                                        <input name="survey" id="checkbox" value="declater" type="checkbox">
+                                        <label for="checkbox">{{$value->name}}</label>
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="radio radio-danger">
-                                        <input name="survey" id="Radios2" value="No" type="radio">
-                                        <label for="Radios2"> A Bathing Ape </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="radio radio-danger">
-                                        <input name="survey" id="Radios3" value="declater" type="radio">
-                                        <label for="Radios3"> The Hundreds </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="radio radio-danger">
-                                        <input name="survey" id="Radios4" value="declater" type="radio">
-                                        <label for="Radios4"> Alife </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="radio radio-danger">
-                                        <input name="survey" id="Radios5" value="declater" type="radio">
-                                        <label for="Radios5"> Neighborhood </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="radio radio-danger">
-                                        <input name="survey" id="Radios6" value="declater" type="radio">
-                                        <label for="Radios6"> CLOT </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="radio radio-danger">
-                                        <input name="survey" id="Radios7" value="declater" type="radio">
-                                        <label for="Radios7"> Acapulco Gold </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="radio radio-danger">
-                                        <input name="survey" id="Radios8" value="declater" type="radio">
-                                        <label for="Radios8"> UNDFTD </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="radio radio-danger">
-                                        <input name="survey" id="Radios9" value="declater" type="radio">
-                                        <label for="Radios9"> Mighty Healthy </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="radio radio-danger">
-                                        <input name="survey" id="Radios10" value="declater" type="radio">
-                                        <label for="Radios10"> Fiberops </label>
-                                    </div>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
+                    @endif
 
                 </div>
             </div>
@@ -171,27 +117,31 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
                                 <div class="row">
-                                @if($subcategory->count()>0)
+                                    @if($subcategory->count()>0)
                                     @foreach($subcategory as $key => $value)
                                     @if(isset($value->product[0]))
                                     @foreach($value->product as $key2 => $val)
+                                    @if(isset($val->attribute[$key2]))
+                                    <input type="hidden" value="{{$val->attribute[$key2]->id}}" id="product_attribute{{$val->id}}">
+                                    @endif
                                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                         <div class="products-single fix">
                                             <div class="box-img-hover">
-                                                <div class="type-lb">
+                                                <div class="type-lb"> 
                                                     <p class="sale">Sale</p>
                                                 </div>
                                                 {{-- {{dd($val->images)}} --}}
                                                 @if(isset($val->images[0]))
                                                 <img src="{{ asset('images/'.$val->images[0]->name) }}" class="img-fluid" alt="Image">
                                                 @endif
+                                                {{-- {{dd($val->cart)}} --}}
                                                 <div class="mask-icon">
                                                     <ul>
                                                         <li><a href="product={{$val->id}}" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
                                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                                         <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                     </ul>
-                                                    <a class="cart add-cart" href="javascript:void(0)">Add to Cart</a>
+                                                    <a class="cart {{isset($val->cart) ? 'remove-cart' :'add-cart'}}" data-id="{{$val->id}}" href="javascript:void(0)">{{isset($val->cart) ? 'Remove from cart' :'Add to Cart'}}</a>
                                                 </div>
                                             </div>
                                             <div class="why-text">
@@ -202,28 +152,28 @@
                                     </div>
                                     @endforeach
                                     @else
-                                     <div class="container">
-                                      <h1>No Product Found</h1>
-                                     </div>
+                                    <div class="container">
+                                        <h1>No Product Found</h1>
+                                    </div>
                                     @endif
                                     @endforeach
-                                @endif
+                                    @endif
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="list-view">
-                                
+
                                 <div class="list-view-box">
                                     <div class="row">
-                                     @foreach($subcategory as $key => $value)
-                                     @if($value->product)
-                                     @foreach($value->product as $key2 => $val)
+                                        @foreach($subcategory as $key => $value)
+                                        @if($value->product)
+                                        @foreach($value->product as $key2 => $val)
                                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                             <div class="products-single fix">
                                                 <div class="box-img-hover">
                                                     <div class="type-lb">
                                                         <p class="new">New</p>
                                                     </div>
-                                                    {{-- <img src="{{ asset('images/'.$val->images[0]->name) }}" class="img-fluid" alt="Image"> --}}
+                                                    <img src="{{ asset('images/'.$val->images[0]->name) }}" class="img-fluid" alt="Image">
                                                     <div class="mask-icon">
                                                         <ul>
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
@@ -259,4 +209,62 @@
     </div>
 </div>
 <!-- End Shop Page -->
+@endsection 
+@section('footer')
+<script>
+    $(".add-cart").click(function() {
+        let quantity = 1
+        let product_id = $(this).data('id')
+        let attribute_id = $('#product_attribute'+product_id).val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "post"
+            , url: '/user/add/card'
+            , data: {
+                'product_id': product_id
+                ,'quantity': quantity,
+                'product_attribute_id':attribute_id
+            }
+            , dataType: 'json'
+            , success: function(data) {
+                console.log(data)
+            }
+            , error: function(data) {
+                console.log(data)
+            }
+        });
+    });
+
+    //remove form the cart
+      $(".remove-cart").click(function() {
+        let quantity = 1
+        let product_id = $(this).data('id')
+        let attribute_id = $('#product_attribute'+product_id).val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "post"
+            , url: '/user/remove/card'
+            , data: {
+                'product_id': product_id
+                ,'quantity': quantity,
+                'product_attribute_id':attribute_id
+            }
+            , dataType: 'json'
+            , success: function(data) {
+                console.log(data)
+            }
+            , error: function(data) {
+                console.log(data)
+            }
+        });
+    });
+</script>
 @endsection

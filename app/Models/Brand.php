@@ -19,5 +19,9 @@ class Brand extends Model
         'name' => 'required',
         'desc'=>'required',
     ];
+    public function product()
+    {
+        return $this->hasOne(Product::class);
+    }
 
 }

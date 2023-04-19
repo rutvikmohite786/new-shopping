@@ -22,6 +22,15 @@
             <span class="text-danger">{{ $errors->first('subcategory') }}</span>
             @endif
         </div>
+        <div class="form-group">
+            <label for="brand">Select brand</label>
+            <select class="form-control" id="brand" name="brand">
+                <option value="">Select Option</option>
+                @foreach($brand as $key => $value)
+                <option value="{{$value->id}}">{{$value->name}}</option>
+                @endforeach
+            </select>
+        </div>
         <button id="rowAdder" type="button" class="btn btn-dark">
             <span class="bi bi-plus-square-dotted">
             </span> Add Image

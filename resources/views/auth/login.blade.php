@@ -1,4 +1,6 @@
 @extends('layouts.master')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -56,6 +58,15 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
+                                <br><br>
+
+                                @if (request()->is('login'))
+                               <p>Not a member? <a href="#!">Register</a></p>
+                               <p>or sign up with:</p>
+                                {{-- <a href="{{route('redirect.google')}}"><i class="fa fa-google" style="font-size:24px"></i></a> --}}
+                                {{-- <i class="fa fa-facebook" style="font-size:24px"></i> --}}
+                                @endif
+
 
                                 @if (Route::has('password.request'))
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
@@ -64,6 +75,28 @@
                                 @endif
                             </div>
                         </div>
+                        
+                         @if (request()->is('login'))
+                        <!-- Register buttons -->
+                        <div class="text-center">
+                            
+                            <a type="button" class="btn btn-link btn-floating mx-1">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+
+                            <a type="button" href="{{route('redirect.google')}}" class="btn btn-link btn-floating mx-1">
+                                <i class="fa fa-google"></i>
+                            </a>
+
+                            <a type="button" class="btn btn-link btn-floating mx-1">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+
+                            <a type="button" class="btn btn-link btn-floating mx-1">
+                                <i class="fa fa-github"></i>
+                            </a>
+                        </div>
+                        @endif
                     </form>
                 </div>
             </div>

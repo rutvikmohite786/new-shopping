@@ -21,6 +21,8 @@ use App\http\Controllers\Admin\FilterController;
 use App\http\Controllers\Front\PaymentController;
 use App\http\Controllers\Front\Payment\PaypalPaymentController;
 use App\http\Controllers\Front\Payment\SubscriptionController;
+use App\http\Controllers\Admin\SocialController;
+
 
 
 
@@ -50,6 +52,10 @@ Route::group(['middleware' => ['adminauth']], function () {
         Route::get('/user/delete/{id}', 'delete');
         Route::get('/user/add', 'add');
         Route::get('user/password/reset/{id}', 'passwordReset');
+    });
+
+    Route::controller(SocialController::class)->group(function () {
+        Route::get('/social', 'index')->name('index.social');
     });
 
     Route::controller(CategoryController::class)->group(function () {
@@ -168,15 +174,16 @@ Route::group(['middleware' => ['userauth']], function () {
 
     Route::controller(PaypalPaymentController::class)->group(function () {
         Route::post('paypal', 'postPaymentWithpaypal')->name('web.paypal');
-        Route::get('paypal', 'postPaymentWithpaypal')->name('status');
-
+        Route::get('sucess', 'success')->name('payment.success');
+        Route::get('cancel', 'cancel')->name('payment.cancel');
     });
-    
 });
 
 Route::controller(DashboardController::class)->group(function () {
     Route::get('contact', 'contactUs')->name('contact');
+    Route::post('contact/store','contactStore')->name('contact.store');
     Route::get('about', 'aboutUs')->name('about');
+    Route::get('service', 'servicePage')->name('service');
 });
 
 Route::controller(FrontProductController::class)->group(function () {
@@ -184,6 +191,8 @@ Route::controller(FrontProductController::class)->group(function () {
     Route::get('user/subcategoryId={id}', 'subcatgoryProductList')->name('web.subcategory');
     Route::get('user/product={id}', 'getproductDetail')->name('web.product.detail');
     Route::post('user/add/card', 'addtoCart')->name('web.product.add');
+    Route::post('user/remove/card', 'removetoCart')->name('web.product.remove');
+    Route::post('user/change/atter', 'changeAtter')->name('web.product.change.atter');
 });
 
 
@@ -194,6 +203,10 @@ Route::controller(UserLoginController::class)->group(function () {
     Route::get('registration', 'registration')->name('register-user');
     Route::post('custom-registration', 'customRegistration')->name('register');
     Route::get('logout', 'signOut')->name('logout');
+
+    //social login
+    Route::get('auth/google', 'redirectToGoogle')->name('redirect.google');
+    Route::get('auth/google/callback', 'handleGoogleCallback')->name('handel.google');
 });
 
 //admin login routes
@@ -208,3 +221,13 @@ Route::controller(UserManageController::class)->group(function () {
     Route::get('{email}/password/{token}', 'passwordVerify')->name('user.email.verify');
     Route::post('/password/change', 'passwordChange')->name('password.change');
 });
+
+//Google
+Route::get('/login/google', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('/login/google/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleGoogleCallback']);
+//Facebook
+Route::get('/login/facebook', [App\Http\Controllers\Auth\LoginController::class, 'redirectToFacebook'])->name('login.facebook');
+Route::get('/login/facebook/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleFacebookCallback']);
+//Github
+Route::get('/login/github', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGithub'])->name('login.github');
+Route::get('/login/github/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleGithubCallback']);

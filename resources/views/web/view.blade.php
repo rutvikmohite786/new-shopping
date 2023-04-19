@@ -2,15 +2,20 @@
 @section('content')
 <!-- Start All Title Box -->
 <style>
-.price-box-bar button {
-    padding: 10px 20px;
-    font-weight: 700;
-    color: #ffffff;
-    border: none;
-}
-.activeAttr{
-    background-color: #d33b33
-}
+    .price-box-bar button {
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #ffffff;
+        border: none;
+    }
+
+    .activeAttr {
+        background-color: #d33b33
+    }
+    .activeatter{
+        border:solid 4px black
+    }
+
 </style>
 <div class="all-title-box">
     <div class="container">
@@ -50,97 +55,71 @@
                         <span class="sr-only">Next</span>
                     </a>
                     <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-1" data-slide-to="0" class="active">
-                            <img class="d-block w-100 img-fluid" src="images/smp-img-01.jpg" alt="" />
+                        @foreach($produtDetail->images as $key => $value)
+                        <li data-target="#carousel-example-1" data-slide-to="{{$key}}" class="{{$key==0 ? 'active' : ''}}">
+                            <img class="d-block w-100 img-fluid" src="{{ asset('images/'.$value->name) }}" alt="" />
                         </li>
-                        <li data-target="#carousel-example-1" data-slide-to="1">
-                            <img class="d-block w-100 img-fluid" src="images/smp-img-02.jpg" alt="" />
-                        </li>
-                        <li data-target="#carousel-example-1" data-slide-to="2">
-                            <img class="d-block w-100 img-fluid" src="images/smp-img-03.jpg" alt="" />
-                        </li>
+                        @endforeach
                     </ol>
                 </div>
             </div>
             <div class="col-xl-7 col-lg-7 col-md-6">
                 <div class="single-product-details">
-                    <h2>Fachion Lorem ipsum dolor sit amet</h2>
-                    <h5> <del>$ 60.00</del> $40.79</h5>
-                    <p class="available-stock"><span> More than 20 available / <a href="#">8 sold </a></span><p>
+                    <h2>{{$produtDetail->name}}</h2>
+                    <h5> <del>$ 60.00</del> ${{$produtDetail->attribute[0]->selling_price}}</h5>
+                    <p class="available-stock"><span> More than 20 available / <a href="#">8 sold </a></span>
+                        <p>
                             <h4>Short Description:</h4>
-                            <p>Nam sagittis a augue eget scelerisque. Nullam lacinia consectetur sagittis. Nam sed neque id eros fermentum dignissim quis at tortor. Nullam ultricies urna quis sem sagittis pharetra. Nam erat turpis, cursus in ipsum at,
-                                tempor imperdiet metus. In interdum id nulla tristique accumsan. Ut semper in quam nec pretium. Donec egestas finibus suscipit. Curabitur tincidunt convallis arcu. </p>
+                            <p>{{$produtDetail->name}} </p>
                             <form action="{{route('web.payment.detail')}}" method="get">
-                            <input type="hidden" name="id" value="{{$produtDetail->id}}">
+                                <input type="hidden" name="id" value="{{$produtDetail->id}}">
+                                <input type="hidden" name="attribute_id" id="attribute_id" value="{{$produtDetail->attribute[0]->id}}">
+                                @csrf
+                                @foreach($attribute as $key => $value)
+                                <ul>
+                                    <h2>{{$value->value}}</h2>
+                                    @foreach($value->attribute as $key2 => $val)
+                                    <li>
+                                    <input type="radio" id="atter{{$key}}" name="atter[{{$key}}]" data-id="{{$val->id}}" value="HTML">
+                                    <label for="html{{$key}}">{{$val->attribute_value}}</label><br>
+                                        {{-- <div class="form-group size-st">
+                                            <a class="btn hvr-hover attributeval" data-id="{{$val->id}}">{{$val->attribute_value}}</a>
+                                        </div> --}}
+                                    </li>
+                                    @endforeach
+                                </ul>
+                                @endforeach
+                                <div>
+                                    <div class="subtitle my-3 theme-text">Colors:</div>
+                                    <div class="select-colors d-flex">
+                                        @foreach($color as $key => $value)
+                                        <button type="button" class="btn ">{{$value->name}}</button>
+                                        @endforeach
 
-                            @csrf
-                            <ul>
-                                <li>
-                                    <div class="form-group size-st">
-                                        <label class="size-label">Size</label>
-                                        <select id="basic" class="selectpicker show-tick form-control" name="size">
-                                            <option value="0">Size</option>
-                                            <option value="0">S</option>
-                                            <option value="1">M</option>
-                                            <option value="1">L</option>
-                                            <option value="1">XL</option>
-                                            <option value="1">XXL</option>
-                                            <option value="1">3XL</option>
-                                            <option value="1">4XL</option>
-                                        </select>
                                     </div>
-                                </li>
-                                <li>
-                                    <div class="form-group quantity-box">
-                                        <label class="control-label">Quantity</label>
-                                        <input class="form-control" id="quantity" value="1" min="1" max="20" type="number">
-                                    </div>
-                                </li>
-                            </ul>
-
-                            @foreach($produtDetail->attribute as $key => $value) 
-                            @if($key==0)
-                            <h2>{{$value->atter->value}}</h2>
-                            <input type="hidden" value="{{$value->id}}" name="attribute_id">
-                            @endif
-                            <ul class="{{$key == 0 ? 'activeAttr' :'' }}" id="{{$value->atter->id}}">
-                                <li>
-                                    <div class="form-group size-st">
-                                        <label class="size-label">Size</label>
-                                        <input class="form-control" id="quantity" value="{{$value->attribute_value}}" type="text">
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-group quantity-box">
-                                        <label class="control-label">Price</label>
-                                        <input class="form-control" id="quantity"  type="text" value="{{$value->selling_price}}">
-                                    </div>
-                                </li>
-                            </ul>
-                            @endforeach
-
-                            <div class="price-box-bar">
-                                <div class="cart-and-bay-btn">
-                                    <button class="btn hvr-hover" data-fancybox-close="" >Buy Now</button>
-                                    <a class="btn hvr-hover add-cart" data-fancybox-close="" href="javascript:void(0)">Add to cart</a>
                                 </div>
-                            </div>
-
-                            <form>
-
-                            <div class="add-to-btn">
-                                <div class="add-comp">
-                                    <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
-                                    <a class="btn hvr-hover" href="#"><i class="fas fa-sync-alt"></i> Add to Compare</a>
+                                <br>
+                                <div class="price-box-bar">
+                                    <div class="cart-and-bay-btn">
+                                        <button class="btn hvr-hover" data-fancybox-close="">Buy Now</button>
+                                        <a class="btn hvr-hover {{$userCart->count()>0 ? 'remove-cart' : 'add-cart' }}" data-fancybox-close="" href="javascript:void(0)">{{$userCart->count()>0 ? 'Remove from cart' : 'Add to cart'}}</a>
+                                    </div>
                                 </div>
-                                <div class="share-bar">
-                                    <a class="btn hvr-hover" href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-                                    <a class="btn hvr-hover" href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
-                                    <a class="btn hvr-hover" href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-                                    <a class="btn hvr-hover" href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a>
-                                    <a class="btn hvr-hover" href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
-                                </div>
-                            </div>
+                                <form>
+
+                                    <div class="add-to-btn">
+                                        <div class="add-comp">
+                                            <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
+                                            <a class="btn hvr-hover" href="#"><i class="fas fa-sync-alt"></i> Add to Compare</a>
+                                        </div>
+                                        <div class="share-bar">
+                                            <a class="btn hvr-hover" href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                                            <a class="btn hvr-hover" href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
+                                            <a class="btn hvr-hover" href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                                            <a class="btn hvr-hover" href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a>
+                                            <a class="btn hvr-hover" href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
                 </div>
             </div>
         </div>
@@ -316,7 +295,7 @@
 <script>
     $(".add-cart").click(function() {
         let quantity = $('#quantity').val();
-        let attribute_id = $('.activeAttr').attr('id');
+        let attribute_id = $('#attribute_id').val();
         console.log(attribute_id);
         let product_id = $('#product_id').val()
         $.ajaxSetup({
@@ -329,8 +308,44 @@
             , url: '/user/add/card'
             , data: {
                 'product_id': product_id
-                , 'quantity': quantity,
-                'product_attribute_id':attribute_id
+                , 'quantity': quantity
+                , 'product_attribute_id': attribute_id
+            }
+            , dataType: 'json'
+            , success: function(data) {
+                $('.add-cart').text('Remove from cart')
+                //$(".add-cart").attr('class', 'btn hvr-hover remove-cart');
+
+                $(".add-cart").toggleClass('add-cart remove-cart');
+                console.log(data.data.product.images[0])
+                var url = 'http://127.0.0.1:8000'
+                var html = '<li><a href="#" class="photo"><img src=' + url + '/' + data.data.product.images[0].path + ' class="cart-thumb" alt="" /></a><h6><a href="#">' + data.data.product.name + '</a></h6><p>8x - <span class="price">90</span></p></li>'
+                $('.cart-list').append(html)
+            }
+            , error: function(data) {
+                console.log(data)
+            }
+        });
+
+    });
+
+    $(".remove-cart").click(function() {
+        let quantity = $('#quantity').val();
+        let attribute_id = $('#attribute_id').val();
+        console.log(attribute_id);
+        let product_id = $('#product_id').val()
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "post"
+            , url: '/user/remove/card'
+            , data: {
+                'product_id': product_id
+                , 'quantity': quantity
+                , 'product_attribute_id': attribute_id
             }
             , dataType: 'json'
             , success: function(data) {
@@ -341,6 +356,69 @@
             }
         });
 
+    });
+
+    $(".attributeval").click(function() {
+        $(this).css('border', "solid 4px black");  
+        $(this).addClass('activeatter')
+        let quantity = $('#quantity').val();
+        let attribute_id = $('#attribute_id').val();
+        let attribute_val = $(this).data('id')
+        console.log(attribute_id, attribute_val);
+        let product_id = $('#product_id').val()
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "post"
+            , url: '/user/change/atter'
+            , data: {
+                'product_id': product_id
+                , 'quantity': quantity
+                , 'product_attribute_id': attribute_id
+            }
+            , dataType: 'json'
+            , success: function(data) {
+                console.log(data)
+            }
+            , error: function(data) {
+                console.log(data)
+            }
+        });
+
+    });
+
+    $("input[type='radio']").change(function(){
+        let quantity = $('#quantity').val();
+        let attribute_val = $(this).data('id')
+        console.log(attribute_id, attribute_val);
+        let product_id = $('#product_id').val()
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "post"
+            , url: '/user/change/atter'
+            , data: {
+                'product_id': product_id
+                , 'quantity': quantity
+                , 'product_attribute_id': attribute_val
+            }
+            , dataType: 'json'
+            , success: function(data) {
+                console.log(data)
+            }
+            , error: function(data) {
+                console.log(data)
+            }
+        });
+
+    
+   
     });
 
 </script>

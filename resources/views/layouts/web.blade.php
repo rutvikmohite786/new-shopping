@@ -29,7 +29,7 @@
 <body>
 
     <!-- Start Main Top -->
-    <div class="main-top">
+    {{-- <div class="main-top">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -85,7 +85,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- End Main Top -->
 
     <!-- Start Main Top -->
@@ -107,8 +107,8 @@
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                         <li class="nav-item active"><a class="nav-link" href="{{route('user')}}">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{route('about')}}">About Us</a></li>
-                        <li class="dropdown megamenu-fw">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
+                        <li class="dropdown megamenu-fw ">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Product<i class="fab fa-opencart"></i></a>
                             <ul class="dropdown-menu megamenu-content" role="menu">
                                 <li>
                                     <div class="row">
@@ -120,12 +120,11 @@
                                             <div class="content">
                                                 <ul class="menu-col">
                                                     @foreach($value->subcategorymany as $key => $val)
-                                                    <li><a href="shop.html">{{$val->name}}</a></li>
-                                                    @endforeach
+                                                    <li><a href="subcategoryId={{$val->id}}">{{$val->name}}</a></li>
+                                                    @endforeach 
                                                 </ul>
                                             </div>
                                         </div>
-
                                         @endforeach
 
                                     </div>
@@ -134,7 +133,8 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">{{auth()->user() ? 'My acount' : 'login'}}</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{auth()->user() ? 'My acount' : 'login'}}<i class='fas fa-user-circle'></i></a>
+
                             <ul class="dropdown-menu">
                                 <li><a href="cart.html">Cart</a></li>
                                 <li><a href="checkout.html">Checkout</a></li>
@@ -154,7 +154,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="service.html">Our Service</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('service')}}">Our Service</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{route('contact')}}">Contact Us</a></li>
                     </ul>
                 </div>
@@ -180,14 +180,19 @@
                 <a href="#" class="close-side"><i class="fa fa-times"></i></a>
                 <li class="cart-box">
                     <ul class="cart-list">
-                    
+                       @if(user_cart_data()->count()>0)
                        @foreach(user_cart_data() as $key => $value)
                         <li>
                             <a href="#" class="photo"><img src="{{ asset('images/'.$value->product->images[0]->name) }}" class="cart-thumb" alt="" /></a>
                             <h6><a href="#">{{$value->product->name}}</a></h6>
                             <p>{{$value->quantity}}x - <span class="price">{{$value->productatter->selling_price*$value->quantity}}</span></p>
                         </li>    
-                        @endforeach
+                        @endforeach 
+                        @else
+                        <li>
+                        No Product Found
+                        </li>
+                        @endif
                   
                     </ul>
                 </li>

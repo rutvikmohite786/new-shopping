@@ -5,6 +5,9 @@
         height: 345px !important;
 
     }
+    .categorytitle{
+        font-size:50px !important
+    }
     </style>
 
 <!-- Start Slider -->
@@ -41,6 +44,8 @@
 <!-- Start Categories  -->
 <div class="categories-shop">
     <div class="container">
+        <h1 class="categorytitle text-center">Shop By Category</h1>
+        <br>
         <div class="row">
           @foreach($category as $key => $value)
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
