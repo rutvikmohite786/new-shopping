@@ -10,7 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Socialite;
-
+use App\Jobs\NewUserJob;
 
 class UserLoginController extends Controller
 {
@@ -58,12 +58,14 @@ class UserLoginController extends Controller
 
     public function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $details = [
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'name'=>$data['name'],
             'status_id'=>1
-        ]);
+        ];
+        dispatch(new NewUserJob($details));
+        return User::create($details);
     }
 
     public function dashboard()

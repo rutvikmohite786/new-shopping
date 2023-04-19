@@ -357,7 +357,19 @@
                                         <li class="nav-item">
                                             <a href="{{route('index.attribute')}}" class="nav-link {{ (request()->is('attribute/*')) || (request()->is('attribute')) ? 'active' : '' }}">
                                                 <i class="far fa-circle nav-icon"></i>
-                                                <p>Site</p>
+                                                <p>Country</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{route('index.attribute')}}" class="nav-link {{ (request()->is('attribute/*')) || (request()->is('attribute')) ? 'active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>State</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{route('index.attribute')}}" class="nav-link {{ (request()->is('attribute/*')) || (request()->is('attribute')) ? 'active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>City</p>
                                             </a>
                                         </li>
                                     </ul>

@@ -21,6 +21,8 @@ use App\http\Controllers\Admin\FilterController;
 use App\http\Controllers\Front\PaymentController;
 use App\http\Controllers\Front\Payment\PaypalPaymentController;
 use App\http\Controllers\Front\Payment\SubscriptionController;
+use App\http\Controllers\Admin\SocialController;
+
 
 
 
@@ -50,6 +52,10 @@ Route::group(['middleware' => ['adminauth']], function () {
         Route::get('/user/delete/{id}', 'delete');
         Route::get('/user/add', 'add');
         Route::get('user/password/reset/{id}', 'passwordReset');
+    });
+
+    Route::controller(SocialController::class)->group(function () {
+        Route::get('/social', 'index')->name('index.social');
     });
 
     Route::controller(CategoryController::class)->group(function () {
@@ -170,10 +176,7 @@ Route::group(['middleware' => ['userauth']], function () {
         Route::post('paypal', 'postPaymentWithpaypal')->name('web.paypal');
         Route::get('sucess', 'success')->name('payment.success');
         Route::get('cancel', 'cancel')->name('payment.cancel');
-
-
     });
-    
 });
 
 Route::controller(DashboardController::class)->group(function () {
