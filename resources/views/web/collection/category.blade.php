@@ -274,7 +274,7 @@
             return this.value;
         }).get();
         var sub_id = $('#sub_id').val();
-         $.ajaxSetup({
+        $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
             }
@@ -284,8 +284,8 @@
             type: "post"
             , url: '/user/brand/filter'
             , data: {
-                'brand_id':checkedValues,
-                'sub_id':sub_id
+                'brand_id': checkedValues
+                , 'sub_id': sub_id
             }
             , success: function(data) {
                 $('.product-categorie-box').html('')
@@ -296,6 +296,10 @@
                 console.log(data)
             }
         });
+    });
+
+    $('#basic').change(function() {
+        
     });
 
 </script>

@@ -23,6 +23,8 @@ class FilterController extends Controller
   {
     $sub_id = $request->sub_id;
     $brand_id = $request->brand_id;  
+    $sort_by = $request->sort_by;
+    $price = $request->price;
     if($brand_id!=null){
     $subcategory = SubCategory::where('id', $sub_id)->with(['category', 'product.attribute.atter', 'product.cart','product.brand'=>function($q) use($brand_id){
       $q->whereIn('id',$brand_id);
@@ -35,5 +37,5 @@ class FilterController extends Controller
     })->get();
     $cat_id = $subcategory[0]->category->id;
     return view('web.append.brandfilter', compact('subcategory', 'cat_id', 'sub_id', 'brand','brand_id'));
-  }
+  } 
 }

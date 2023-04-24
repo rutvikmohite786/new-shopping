@@ -5,7 +5,7 @@
             @foreach($subcategory as $key => $value)
             @if(isset($value->product[0]))
             @foreach($value->product as $key2 => $val)
-            
+
             @if($brand_id!='')
             @if($val->brand == '')
 
@@ -43,7 +43,7 @@
             @endif
             @else
 
-             @if(isset($val->attribute[$key2]))
+            @if(isset($val->attribute[$key2]))
             <input type="hidden" value="{{$val->attribute[$key2]->id}}" id="product_attribute{{$val->id}}">
             @endif
 
@@ -70,11 +70,11 @@
                     </div>
                 </div>
             </div>
-           
+
             @endif
 
             @endforeach
-        
+
             <div class="container">
                 <h1>No Product Found</h1>
             </div>
@@ -83,6 +83,9 @@
             @endif
         </div>
     </div>
+
+    <!--grid view-->
+
     <div role="tabpanel" class="tab-pane fade" id="list-view">
 
         <div class="list-view-box">
@@ -90,11 +93,14 @@
                 @foreach($subcategory as $key => $value)
                 @if($value->product)
                 @foreach($value->product as $key2 => $val)
+
+                @if($brand_id!='')
+                @if($val->brand == '')
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <div class="products-single fix">
                         <div class="box-img-hover">
                             <div class="type-lb">
-                                <p class="new">New</p>
+                                <p class="new"></p>
                             </div>
                             <img src="{{ asset('images/'.$val->images[0]->name) }}" class="img-fluid" alt="Image">
                             <div class="mask-icon">
@@ -117,10 +123,15 @@
                         <a class="btn hvr-hover" href="#">Add to Cart</a>
                     </div>
                 </div>
+
+                @endif
+                @endif
+
                 @endforeach
                 @endif
                 @endforeach
             </div>
         </div>
     </div>
+
 </div>
