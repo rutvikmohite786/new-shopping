@@ -153,10 +153,15 @@ Route::group(['middleware' => ['adminauth']], function () {
     //filter
     Route::controller(FilterController::class)->group(function () {
         Route::any('filter/user', 'userFilter')->name('user.filter');
+        Route::post('user/brand/filter', 'brandFilter')->name('user.brand.filter');
     });
 });
 
 Route::group(['middleware' => ['userauth']], function () {
+    Route::controller(FilterController::class)->group(function () {
+        Route::post('user/brand/filter', 'brandFilter')->name('user.brand.filter');
+    });
+
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/user/new', 'index')->name('user');
     });

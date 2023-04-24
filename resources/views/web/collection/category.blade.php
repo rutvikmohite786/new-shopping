@@ -2,6 +2,7 @@
 @section('content')
 
 <!-- Start All Title Box -->
+<input type="hidden" id="sub_id" value="{{$sub_id}}">
 <div class="all-title-box">
     <div class="container">
         <div class="row">
@@ -34,7 +35,7 @@
                             <h3>Categories</h3>
                         </div>
                         <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
-                            
+
                             @foreach($category as $key => $value)
                             <div class="list-group-collapse sub-men">
                                 <a class="list-group-item list-group-item-action" href="#sub-men{{$key}}" data-toggle="collapse" aria-expanded="true" aria-controls="sub-men{{$key}}">{{$value->name}} <small class="text-muted">({{$value->subcategorymany->count()}})</small>
@@ -62,7 +63,7 @@
                             </p>
                         </div>
                     </div>
-                    
+
                     @if($brand->count()>0)
                     <div class="filter-brand-left">
                         <div class="title-left">
@@ -73,7 +74,7 @@
                                 @foreach($brand as $key => $value)
                                 <li>
                                     <div class="radio radio-danger">
-                                        <input name="survey" id="checkbox" value="declater" type="checkbox">
+                                        <input class="checkbox" name="survey" id="checkbox" value="{{$value->id}}" type="checkbox">
                                         <label for="checkbox">{{$value->name}}</label>
                                     </div>
                                 </li>
@@ -127,7 +128,7 @@
                                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                         <div class="products-single fix">
                                             <div class="box-img-hover">
-                                                <div class="type-lb"> 
+                                                <div class="type-lb">
                                                     <p class="sale">Sale</p>
                                                 </div>
                                                 {{-- {{dd($val->images)}} --}}
@@ -209,13 +210,13 @@
     </div>
 </div>
 <!-- End Shop Page -->
-@endsection 
+@endsection
 @section('footer')
 <script>
     $(".add-cart").click(function() {
         let quantity = 1
         let product_id = $(this).data('id')
-        let attribute_id = $('#product_attribute'+product_id).val();
+        let attribute_id = $('#product_attribute' + product_id).val();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -226,8 +227,8 @@
             , url: '/user/add/card'
             , data: {
                 'product_id': product_id
-                ,'quantity': quantity,
-                'product_attribute_id':attribute_id
+                , 'quantity': quantity
+                , 'product_attribute_id': attribute_id
             }
             , dataType: 'json'
             , success: function(data) {
@@ -240,10 +241,10 @@
     });
 
     //remove form the cart
-      $(".remove-cart").click(function() {
+    $(".remove-cart").click(function() {
         let quantity = 1
         let product_id = $(this).data('id')
-        let attribute_id = $('#product_attribute'+product_id).val();
+        let attribute_id = $('#product_attribute' + product_id).val();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -254,8 +255,8 @@
             , url: '/user/remove/card'
             , data: {
                 'product_id': product_id
-                ,'quantity': quantity,
-                'product_attribute_id':attribute_id
+                , 'quantity': quantity
+                , 'product_attribute_id': attribute_id
             }
             , dataType: 'json'
             , success: function(data) {
@@ -266,5 +267,36 @@
             }
         });
     });
+
+    //remove form the cart
+    $(".checkbox").change(function() {
+        var checkedValues = $('input:checkbox:checked').map(function() {
+            return this.value;
+        }).get();
+        var sub_id = $('#sub_id').val();
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: "post"
+            , url: '/user/brand/filter'
+            , data: {
+                'brand_id':checkedValues,
+                'sub_id':sub_id
+            }
+            , success: function(data) {
+                $('.product-categorie-box').html('')
+                $('.product-categorie-box').html(data)
+                console.log(data)
+            }
+            , error: function(data) {
+                console.log(data)
+            }
+        });
+    });
+
 </script>
 @endsection
