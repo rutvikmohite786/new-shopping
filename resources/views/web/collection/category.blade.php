@@ -299,7 +299,35 @@
     });
 
     $('#basic').change(function() {
-        
+        console.log('hjhjh')
+        var price = $('#basic').find(":selected").val();
+        var checkedValues = $('input:checkbox:checked').map(function() {
+            return this.value;
+        }).get();
+        var sub_id = $('#sub_id').val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: "post"
+            , url: '/user/brand/filter'
+            , data: {
+                'brand_id': checkedValues
+                , 'sub_id': sub_id,
+                'price':price
+            }
+            , success: function(data) {
+                $('.product-categorie-box').html('')
+                $('.product-categorie-box').html(data)
+                console.log(data)
+            }
+            , error: function(data) {
+                console.log(data)
+            }
+        });
     });
 
 </script>

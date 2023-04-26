@@ -25,7 +25,7 @@ class Product extends Model
     }
     public function attribute()
     {
-        return $this->hasMany(ProductAttribute::class, 'product_id');
+        return $this->hasMany(ProductAttribute::class, 'product_id')->orderBy('selling_price','DESC');
     }
     public function brand()
     {
